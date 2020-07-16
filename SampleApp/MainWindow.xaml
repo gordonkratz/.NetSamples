@@ -7,34 +7,38 @@
         mc:Ignorable="d"
         d:DataContext="SampleAppDataContext"
         Title="MainWindow" Height="450" Width="800">
-    <Grid Margin="12px">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height ="auto"/>
-            <RowDefinition Height ="20px"/>
-            <RowDefinition Height ="auto"/>
-            <RowDefinition Height ="auto"/>
-            <RowDefinition Height ="auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Name="TextLabel">Input text and press the button to change this text</TextBlock>
-        <TextBox Grid.Row="1" x:Name="InputBox" Width="200px" HorizontalAlignment="Left"/>
-        <Button Grid.Row="2" Click="Button_Click" Content="Click Here" Width="200" HorizontalAlignment="Left"/>
+    <TabControl>
+        <TabItem Header="Binding Samples">
+        <Grid Margin="12px">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height ="auto"/>
+                <RowDefinition Height ="20px"/>
+                <RowDefinition Height ="auto"/>
+                <RowDefinition Height ="auto"/>
+                <RowDefinition Height ="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Name="TextLabel">Input text and press the button to change this text</TextBlock>
+            <TextBox Grid.Row="1" x:Name="InputBox" Width="200px" HorizontalAlignment="Left"/>
+            <Button Grid.Row="2" Click="Button_Click" Content="Click Here" Width="200" HorizontalAlignment="Left"/>
 
-        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-            <TextBlock>This changes dynamically: </TextBlock>
-            <TextBlock Text="{Binding ElementName=DynamicTextBox, Path=Text}"/>
-        </StackPanel>
-        <TextBox x:Name="DynamicTextBox" Grid.Row="1" Grid.Column="1" Width="200px" HorizontalAlignment="Left"/>
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                <TextBlock>This changes dynamically:</TextBlock>
+                <TextBlock Text="{Binding ElementName=DynamicTextBox, Path=Text}"/>
+            </StackPanel>
+            <TextBox x:Name="DynamicTextBox" Grid.Row="1" Grid.Column="1" Width="200px" HorizontalAlignment="Left"/>
 
-        <StackPanel Grid.Row="4" Grid.Column="0" Orientation="Horizontal">
-            <TextBlock>This is bound through the viewModel:</TextBlock>
-            <TextBlock Grid.Row="4" Grid.Column="0" Name="ViewModelBoundLabel" Text="{Binding LabelText, Mode=OneWay}"/>
-        </StackPanel>
-        <TextBox Grid.Row="5" x:Name="ViewModelTextBox" Text="{Binding LabelText, UpdateSourceTrigger=PropertyChanged}" Width="200px" HorizontalAlignment="Left"/>
-    </Grid>
+            <StackPanel Grid.Row="4" Grid.Column="0" Orientation="Horizontal">
+                <TextBlock>This is bound through the viewModel:</TextBlock>
+                <TextBlock Grid.Row="4" Grid.Column="0" Name="ViewModelBoundLabel" Text="{Binding LabelText, Mode=OneWay}"/>
+            </StackPanel>
+            <TextBox Grid.Row="5" x:Name="ViewModelTextBox" Text="{Binding LabelText, UpdateSourceTrigger=PropertyChanged}" Width="200px" HorizontalAlignment="Left"/>
+        </Grid>
+        </TabItem>
+    </TabControl>
 </Window>
