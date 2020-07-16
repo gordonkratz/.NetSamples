@@ -23,11 +23,12 @@ namespace SampleApp
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new SampleAppDataContext();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            TextLabel.Content = InputBox.Text;
+            TextLabel.Text = InputBox.Text;
         }
     }
 }

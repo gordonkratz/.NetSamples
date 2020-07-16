@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SampleApp"
         mc:Ignorable="d"
+        d:DataContext="SampleAppDataContext"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -12,8 +13,18 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height ="auto"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Name="TextLabel">Input text and press the button to change this text</Label>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Name="TextLabel">Input text and press the button to change this text</TextBlock>
         <TextBox Grid.Row="1" x:Name="InputBox" Width="200px" HorizontalAlignment="Left"/>
         <Button Grid.Row="2" Click="Button_Click" Content="Click Here" Width="200" HorizontalAlignment="Left"/>
+
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+            <TextBlock>This changes dynamically: </TextBlock>
+            <TextBlock Text="{Binding ElementName=DynamicTextBox, Path=Text}"/>
+        </StackPanel>
+        <TextBox x:Name="DynamicTextBox" Grid.Row="1" Grid.Column="1" Width="200px" HorizontalAlignment="Left"/>
     </Grid>
 </Window>
