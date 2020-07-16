@@ -7,10 +7,14 @@
         mc:Ignorable="d"
         d:DataContext="SampleAppDataContext"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid Margin="12px">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height ="auto"/>
+            <RowDefinition Height ="20px"/>
+            <RowDefinition Height ="auto"/>
+            <RowDefinition Height ="auto"/>
             <RowDefinition Height ="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -26,5 +30,11 @@
             <TextBlock Text="{Binding ElementName=DynamicTextBox, Path=Text}"/>
         </StackPanel>
         <TextBox x:Name="DynamicTextBox" Grid.Row="1" Grid.Column="1" Width="200px" HorizontalAlignment="Left"/>
+
+        <StackPanel Grid.Row="4" Grid.Column="0" Orientation="Horizontal">
+            <TextBlock>This is bound through the viewModel:</TextBlock>
+            <TextBlock Grid.Row="4" Grid.Column="0" Name="ViewModelBoundLabel" Text="{Binding LabelText, Mode=OneWay}"/>
+        </StackPanel>
+        <TextBox Grid.Row="5" x:Name="ViewModelTextBox" Text="{Binding LabelText, UpdateSourceTrigger=PropertyChanged}" Width="200px" HorizontalAlignment="Left"/>
     </Grid>
 </Window>
