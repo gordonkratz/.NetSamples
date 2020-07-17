@@ -9,7 +9,7 @@
     <ItemsControl x:Name="Board" ItemsSource="{Binding Cells}">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate >
-                <UniformGrid Rows="{Binding Dimension}" Columns="{Binding Dimension}"/>
+                <UniformGrid Rows="{x:Static local:TicTacToeViewModel.Dimension}" Columns="{x:Static local:TicTacToeViewModel.Dimension}"/>
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
 

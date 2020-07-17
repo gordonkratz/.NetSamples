@@ -9,13 +9,13 @@ namespace SampleApp.TicTacToe
     public class TicTacToeViewModel : ViewModelBase
     {
         public ICommand MakeMove { get; }
-        public int Dimension { get; } = 3;
+        public static readonly int Dimension = 3;
 
         public TicTacToeViewModel()
         {
             var rand = new Random();
             var array = Enumerable.Range(0, Dimension * Dimension)
-                    .Select(_ => new TicTacToeViewModelItem((TicTacToeState)rand.Next((int)TicTacToeState.O)))
+                    .Select(_ => new TicTacToeViewModelItem(TicTacToeState.None))
                     .ToArray();
             Cells = new ObservableCollection<TicTacToeViewModelItem>(array);
             MakeMove = new RelayCommand<TicTacToeViewModelItem>(MakeMoveInternal);
