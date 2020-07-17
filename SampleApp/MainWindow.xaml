@@ -4,11 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         WindowStyle="SingleBorderWindow"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SampleApp" xmlns:bindingsamples="clr-namespace:SampleApp.BindingSamples"
+        xmlns:local="clr-namespace:SampleApp" xmlns:bindingsamples="clr-namespace:SampleApp.BindingSamples" xmlns:tictactoe="clr-namespace:SampleApp.TicTacToe"
         mc:Ignorable="d"
         d:DataContext="SampleAppDataContext"
         Title="Sample App" Height="450" Width="800">
     <TabControl>
+        <TabItem Header="Tic Tac Toe">
+            <tictactoe:TicTacToeControl DataContext="{Binding TicTacToeViewModel}"/>
+        </TabItem>
         <TabItem Header="Binding Samples">
             <bindingsamples:BindingSamplesControl DataContext="{Binding BindingSampleViewModel}"/>
         </TabItem>

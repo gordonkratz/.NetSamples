@@ -1,4 +1,5 @@
 ﻿using SampleApp.BindingSamples;
+using SampleApp.TicTacToe;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,11 +8,8 @@ namespace SampleApp
 {
     public class SampleAppDataContext
     {
-        public SampleAppDataContext()
-        {
-            BindingSampleViewModel = new BindingSamplesViewModel();
-        }
+        public BindingSamplesViewModel BindingSampleViewModel { get; } = new BindingSamplesViewModel();
 
-        public BindingSamplesViewModel BindingSampleViewModel { get; }
+        public TicTacToeViewModel TicTacToeViewModel { get; } = new TicTacToeViewModel();
     }
 }
