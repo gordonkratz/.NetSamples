@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SampleApp.BindingSamples;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,11 @@ namespace SampleApp
 {
     public class SampleAppDataContext
     {
-        public string LabelText { get; set; }
+        public SampleAppDataContext()
+        {
+            BindingSampleViewModel = new BindingSamplesViewModel();
+        }
+
+        public BindingSamplesViewModel BindingSampleViewModel { get; }
     }
 }

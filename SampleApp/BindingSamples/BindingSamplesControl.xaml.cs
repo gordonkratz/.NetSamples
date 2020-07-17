@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,18 +11,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SampleApp
+namespace SampleApp.BindingSamples
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class BindingSamplesControl : UserControl
     {
-        public MainWindow()
+        public BindingSamplesControl()
         {
             InitializeComponent();
-            DataContext = new SampleAppDataContext();
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            TextLabel.Text = InputBox.Text;
+        }
     }
 }
