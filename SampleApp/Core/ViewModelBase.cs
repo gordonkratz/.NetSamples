@@ -7,9 +7,12 @@ namespace SampleApp.Core
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void NotifyPropertyChanged([CallerMemberName] string memberName = null)
+        protected void OnPropertyChanged<T>(ref T property, T newValue, [CallerMemberName] string memberName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
+            var old = property;
+            property = newValue;
+            if(!old.Equals(property))
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
         }
     }
 }
