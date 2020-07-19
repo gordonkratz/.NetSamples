@@ -2,7 +2,7 @@
 
 namespace SampleApp.TicTacToe
 {
-    public class TicTacToeViewModelItem : ViewModelBase
+    public class TicTacToeViewModelItem : ViewModelBase, ITicTacToeItem
     {
         private TicTacToeState _state;
 

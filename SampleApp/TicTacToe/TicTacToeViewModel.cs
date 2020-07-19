@@ -13,10 +13,11 @@ namespace SampleApp.TicTacToe
 
         private TicTacToeState _nextMover = TicTacToeState.X;
         private readonly TicTacToeViewModelItem[,] _itemsArray;
+        private readonly ICheckTicTacToeEnd<TicTacToeViewModelItem> _checker;
 
         public TicTacToeViewModel()
         {
-            var rand = new Random();
+            _checker = new NaiveChecker<TicTacToeViewModelItem>();
             _itemsArray = new TicTacToeViewModelItem[Dimension, Dimension];
             for(int i = 0; i < Dimension; i++)
             {
@@ -35,7 +36,17 @@ namespace SampleApp.TicTacToe
         {
             item.State = _nextMover;
             _nextMover = _nextMover == TicTacToeState.O ? TicTacToeState.X : TicTacToeState.O;
+            (var isEndCondition, var winner) = _checker.IsGameOver(_itemsArray);
+            if (isEndCondition)
+                ClearBoard();
+        }
 
+        private void ClearBoard()
+        {
+            foreach(var item in _itemsArray)
+            {
+                item.State = TicTacToeState.None;
+            }
         }
 
         public ObservableCollection<TicTacToeViewModelItem> CellCollection { get; } 
