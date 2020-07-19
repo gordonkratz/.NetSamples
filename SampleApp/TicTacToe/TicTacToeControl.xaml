@@ -3,10 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SampleApp.TicTacToe"
+             xmlns:local="clr-namespace:SampleApp.TicTacToe" xmlns:core="clr-namespace:SampleApp.Core"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ItemsControl x:Name="Board" ItemsSource="{Binding Cells}">
+    <ItemsControl x:Name="Board" ItemsSource="{Binding CellCollection}">
+        <ItemsControl.Resources>
+            <ResourceDictionary>
+                <core:EnumToBoolConverter x:Key="EnumBoolConverter"/>
+            </ResourceDictionary>
+        </ItemsControl.Resources>
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate >
                 <UniformGrid Rows="{x:Static local:TicTacToeViewModel.Dimension}" Columns="{x:Static local:TicTacToeViewModel.Dimension}"/>
@@ -15,9 +20,20 @@
 
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <Button Content="{Binding State}" 
+                <Button Grid.Column="{Binding Column, Mode=OneWay}"
+                        Grid.Row="{Binding Row, Mode=OneWay}"
                         Command="{Binding Path=DataContext.MakeMove, ElementName=Board}"
-                        CommandParameter="{Binding}"/>
+                        CommandParameter="{Binding}"
+                        IsEnabled="{Binding State, Converter={StaticResource EnumBoolConverter},
+                            ConverterParameter={x:Static local:TicTacToeState.None}}">
+                    <Button.Content>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="{Binding State}"/>
+                            <TextBlock Text="{Binding Row, StringFormat=Row: {0}}"/>
+                            <TextBlock Text="{Binding Column, StringFormat=Row: {0}}"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
     </ItemsControl>
