@@ -39,14 +39,14 @@ namespace SampleApp.TicTacToe
 
         private TicTacToeState CheckForwardslash(T[,] board)
         {
-            var slashState = board[0, board.Rank - 1].State;
+            var slashState = board[0, board.Rank].State;
             if (slashState != TicTacToeState.None)
             {
-                for (int i = 1; i < board.Rank; i++)
+                for (int i = 1; i <= board.Rank; i++)
                 {
-                    if (board[i, board.Rank - 1 - i].State != slashState)
+                    if (board[i, board.Rank - i].State != slashState)
                         break;
-                    else if (i == board.Rank - 1)
+                    else if (i == board.Rank)
                         return slashState;
                 }
             }
@@ -59,11 +59,11 @@ namespace SampleApp.TicTacToe
             var slashState = board[0, 0].State;
             if (slashState != TicTacToeState.None)
             {
-                for (int i = 1; i < board.Rank; i++)
+                for (int i = 1; i <= board.Rank; i++)
                 {
                     if (board[i, i].State != slashState)
                         break;
-                    else if (i == board.Rank - 1)
+                    else if (i == board.Rank)
                         return slashState;
                 }
             }
@@ -72,17 +72,17 @@ namespace SampleApp.TicTacToe
 
         private TicTacToeState CheckRows(T[,] board)
         {
-            for (int j = 0; j < board.Rank; j++)
+            for (int j = 0; j <= board.Rank; j++)
             {
                 var rowState = board[0, j].State;
                 if (rowState == TicTacToeState.None)
                     continue;
 
-                for (int i = 1; i < board.Rank; i++)
+                for (int i = 1; i <= board.Rank; i++)
                 {
                     if (rowState != board[i, j].State)
                         break;
-                    else if (i == board.Rank - 1)
+                    else if (i == board.Rank)
                         return rowState;
                 }
             }
@@ -92,17 +92,17 @@ namespace SampleApp.TicTacToe
 
         private TicTacToeState CheckColumns(T[,] board)
         {
-            for (int i = 0; i < board.Rank; i++)
+            for (int i = 0; i <= board.Rank; i++)
             {
                 var columnState = board[i, 0].State;
                 if (columnState == TicTacToeState.None)
                     continue;
 
-                for (int j = 1; j < board.Rank; j++)
+                for (int j = 1; j <= board.Rank; j++)
                 {
                     if (columnState != board[i, j].State)
                         break;
-                    else if (j == board.Rank - 1)
+                    else if (j == board.Rank)
                         return columnState;
                 }
             }

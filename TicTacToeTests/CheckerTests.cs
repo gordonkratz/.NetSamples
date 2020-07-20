@@ -25,39 +25,195 @@ namespace TicTacToeTests
         public void ShouldSeeVerticalRows()
         {
             TestCase(new[] {
-                TicTacToeState.O, TicTacToeState.X, TicTacToeState.O,
-                TicTacToeState.O, TicTacToeState.X, TicTacToeState.None,
-                TicTacToeState.O, TicTacToeState.None, TicTacToeState.None},
+                'O', 'X', 'O',
+                'O', 'X', ' ',
+                'O', ' ', ' '},
                 3, true, TicTacToeState.O);
 
             TestCase(new[] {
-                TicTacToeState.None, TicTacToeState.X, TicTacToeState.O,
-                TicTacToeState.None, TicTacToeState.X, TicTacToeState.O,
-                TicTacToeState.None, TicTacToeState.None, TicTacToeState.O},
+                ' ', 'X', 'O',
+                ' ', 'X', 'O',
+                ' ', ' ', 'O'},
                 3, true, TicTacToeState.O);
 
             TestCase(new[] {
-                TicTacToeState.X, TicTacToeState.O, TicTacToeState.None,
-                TicTacToeState.X, TicTacToeState.O, TicTacToeState.None,
-                TicTacToeState.None, TicTacToeState.O, TicTacToeState.None},
+                'X', 'O', ' ',
+                'X', 'O', ' ',
+                ' ', 'O', ' '},
                 3, true, TicTacToeState.O);
+
+            TestCase(new[] {
+                'x', 'o', ' ',
+                'x', 'o', ' ',
+                'x', ' ', ' '},
+                3, true, TicTacToeState.X);
+
+            TestCase(new[] {
+                ' ', 'o', 'x',
+                ' ', 'o', 'x',
+                ' ', ' ', 'x'},
+                3, true, TicTacToeState.X);
+
+            TestCase(new[] {
+                'o', 'x', ' ',
+                'o', 'x', ' ',
+                ' ', 'x', ' '},
+                3, true, TicTacToeState.X);
         }
 
-        private void TestCase(TicTacToeState[] states, int rank, bool endExpected, TicTacToeState resultExpected)
+        [Test]
+        public void ShouldSeeHorizontals()
         {
-            var board = new Cell[rank, rank];
-            var count = 0;
-            for(int i = 0; i < rank; i++)
+            TestCase(new[]
             {
-                for(int j = 0; j < rank; j++)
+                'o', 'o', 'o',
+                'x', 'x', ' ',
+                ' ', ' ', ' '
+            }, 3, true, TicTacToeState.O);
+
+            TestCase(new[]
+            {
+                'x', 'x', ' ',
+                'o', 'o', 'o',
+                ' ', ' ', ' '
+            }, 3, true, TicTacToeState.O);
+
+
+            TestCase(new[]
+            {
+                'x', 'x', ' ',
+                ' ', ' ', ' ',
+                'o', 'o', 'o',
+            }, 3, true, TicTacToeState.O);
+
+            TestCase(new[]
+            {
+                'o', 'o', ' ',
+                'x', 'x', 'x',
+                ' ', ' ', ' '
+            }, 3, true, TicTacToeState.X);
+
+            TestCase(new[]
+            {
+                'x', 'x', 'x',
+                'o', 'o', ' ',
+                ' ', ' ', ' '
+            }, 3, true, TicTacToeState.X);
+
+            TestCase(new[]
+            {
+                'o', 'o', ' ',
+                ' ', ' ', ' ',
+                'x', 'x', 'x',
+            }, 3, true, TicTacToeState.X);
+        }
+
+        [Test]
+        public void ShouldSeeSlashes()
+        {
+            TestCase(new[]
+            {
+                'o', ' ', ' ',
+                ' ', 'o', ' ',
+                'x', 'x', 'o',
+            }, 3, true, TicTacToeState.O);
+
+            TestCase(new[]
+            {
+                'x', ' ', ' ',
+                ' ', 'x', ' ',
+                'o', 'o', 'x',
+            }, 3, true, TicTacToeState.X);
+
+            TestCase(new[]
+            {
+                'x', ' ', 'o',
+                ' ', 'o', ' ',
+                'o', ' ', 'x',
+            }, 3, true, TicTacToeState.O);
+
+            TestCase(new[]
+            {
+                'o', ' ', 'X',
+                ' ', 'x', ' ',
+                'x', 'o', ' ',
+            }, 3, true, TicTacToeState.X);
+        }
+
+        [Test]
+        public void ShouldSeeUnfinishedGames()
+        {
+
+            TestCase(new[]
+            {
+                'o', ' ', ' ',
+                ' ', 'x', ' ',
+                'x', 'o', ' ',
+            }, 3, false, TicTacToeState.None);
+
+            TestCase(new[]
+            {
+                'o', ' ', ' ',
+                ' ', 'x', ' ',
+                'x', ' ', 'o',
+            }, 3, false, TicTacToeState.None);
+
+            TestCase(new[]
+            {
+                'o', ' ', ' ',
+                ' ', 'x', ' ',
+                'x', ' ', ' ',
+            }, 3, false, TicTacToeState.None);
+
+            TestCase(new[]
+            {
+                'o', ' ', ' ',
+                ' ', ' ', ' ',
+                'x', ' ', ' ',
+            }, 3, false, TicTacToeState.None);
+        }
+
+        [Test]
+        public void ShouldSeeStalemate()
+        {
+            TestCase(new[]
+            {
+                'o', 'x', 'x',
+                'x', 'o', 'o',
+                'x', 'o', 'x',
+            }, 3, true, TicTacToeState.None);
+        }
+
+        private void TestCase(char[] states, int dimension, bool endExpected, TicTacToeState resultExpected)
+        {
+            var board = new Cell[dimension, dimension];
+            var count = 0;
+            for(int i = 0; i < dimension; i++)
+            {
+                for(int j = 0; j < dimension; j++)
                 {
-                    board[i, j] = new Cell(states[count]);
+                    board[j, i] = new Cell(ParseState(states[count++]));
                 }
             }
 
             (var isWinner, var winner) = _checker.IsGameOver(board);
             Assert.AreEqual(endExpected, isWinner);
-            Assert.AreEqual(TicTacToeState.O, winner);
+            Assert.AreEqual(resultExpected, winner);
+        }
+
+        private TicTacToeState ParseState(char s)
+        {
+            switch (s)
+            {
+                case 'o':
+                case 'O':
+                    return TicTacToeState.O;
+                case 'x':
+                case 'X':
+                    return TicTacToeState.X;
+                default:
+                    return TicTacToeState.None;
+            }
         }
     }
 
