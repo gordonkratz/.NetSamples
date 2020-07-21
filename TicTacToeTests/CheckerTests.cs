@@ -184,6 +184,18 @@ namespace TicTacToeTests
             }, 3, true, TicTacToeState.None);
         }
 
+        [Test]
+        public void HigherOrderBoards()
+        {
+            TestCase(new[]
+            {
+                'o', 'x', 'x', ' ',
+                'o', 'o', ' ', ' ',
+                ' ', ' ', 'o', ' ',
+                ' ', ' ', 'x', ' ',
+            }, 4, false, TicTacToeState.None);
+        }
+
         private void TestCase(char[] states, int dimension, bool endExpected, TicTacToeState resultExpected)
         {
             var board = new Cell[dimension, dimension];

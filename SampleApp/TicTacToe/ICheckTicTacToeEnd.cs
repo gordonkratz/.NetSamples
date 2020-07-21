@@ -16,37 +16,37 @@ namespace SampleApp.TicTacToe
     {
         public (bool, TicTacToeState) IsGameOver(T[,] board)
         {
-            var dimension = board.Rank;
+            var height = board.GetUpperBound(0);
 
-            var winner = CheckColumns(board);
+            var winner = CheckColumns(board, height);
             if (winner != TicTacToeState.None)
                 return (true, winner);
 
-            winner = CheckRows(board);
+            winner = CheckRows(board, height);
             if (winner != TicTacToeState.None)
                 return (true, winner);
 
-            winner = CheckBackslash(board);
+            winner = CheckBackslash(board, height);
             if (winner != TicTacToeState.None)
                 return (true, winner);
 
-            winner = CheckForwardslash(board);
+            winner = CheckForwardslash(board, height);
             if (winner != TicTacToeState.None)
                 return (true, winner);
 
             return (board.None(b => b.State == TicTacToeState.None), TicTacToeState.None);
         }
 
-        private TicTacToeState CheckForwardslash(T[,] board)
+        private TicTacToeState CheckForwardslash(T[,] board, int height)
         {
-            var slashState = board[0, board.Rank].State;
+            var slashState = board[0, height].State;
             if (slashState != TicTacToeState.None)
             {
-                for (int i = 1; i <= board.Rank; i++)
+                for (int i = 1; i <= height; i++)
                 {
-                    if (board[i, board.Rank - i].State != slashState)
+                    if (board[i, height - i].State != slashState)
                         break;
-                    else if (i == board.Rank)
+                    else if (i == height)
                         return slashState;
                 }
             }
@@ -54,35 +54,35 @@ namespace SampleApp.TicTacToe
             return TicTacToeState.None;
         }
 
-        private TicTacToeState CheckBackslash(T[,] board)
+        private TicTacToeState CheckBackslash(T[,] board, int height)
         {
             var slashState = board[0, 0].State;
             if (slashState != TicTacToeState.None)
             {
-                for (int i = 1; i <= board.Rank; i++)
+                for (int i = 1; i <= height; i++)
                 {
                     if (board[i, i].State != slashState)
                         break;
-                    else if (i == board.Rank)
+                    else if (i == height)
                         return slashState;
                 }
             }
             return TicTacToeState.None;
         }
 
-        private TicTacToeState CheckRows(T[,] board)
+        private TicTacToeState CheckRows(T[,] board, int height)
         {
-            for (int j = 0; j <= board.Rank; j++)
+            for (int j = 0; j <= height; j++)
             {
                 var rowState = board[0, j].State;
                 if (rowState == TicTacToeState.None)
                     continue;
 
-                for (int i = 1; i <= board.Rank; i++)
+                for (int i = 1; i <= height; i++)
                 {
                     if (rowState != board[i, j].State)
                         break;
-                    else if (i == board.Rank)
+                    else if (i == height)
                         return rowState;
                 }
             }
@@ -90,19 +90,19 @@ namespace SampleApp.TicTacToe
             return TicTacToeState.None;
         }
 
-        private TicTacToeState CheckColumns(T[,] board)
+        private TicTacToeState CheckColumns(T[,] board, int height)
         {
-            for (int i = 0; i <= board.Rank; i++)
+            for (int i = 0; i <= height; i++)
             {
                 var columnState = board[i, 0].State;
                 if (columnState == TicTacToeState.None)
                     continue;
 
-                for (int j = 1; j <= board.Rank; j++)
+                for (int j = 1; j <= height; j++)
                 {
                     if (columnState != board[i, j].State)
                         break;
-                    else if (j == board.Rank)
+                    else if (j == height)
                         return columnState;
                 }
             }
