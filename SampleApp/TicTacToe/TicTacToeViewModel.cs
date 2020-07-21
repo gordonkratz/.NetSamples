@@ -1,8 +1,8 @@
-﻿using SampleApp.Core;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using Ui.Utilities;
 
 namespace SampleApp.TicTacToe
 {

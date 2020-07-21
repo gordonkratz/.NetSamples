@@ -3,14 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SampleApp.TicTacToe" xmlns:core="clr-namespace:SampleApp.Core"
+             xmlns:local="clr-namespace:SampleApp.TicTacToe" 
+             xmlns:utilities="clr-namespace:Ui.Utilities;assembly=Ui.Utilities"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.Resources>
             <ResourceDictionary>
-                <core:EnumToBoolConverter x:Key="EnumBoolConverter"/>
-                <core:EnumToStringConverter x:Key="EnumStringConverter"/>
+                <utilities:EnumToBoolConverter x:Key="EnumBoolConverter"/>
+                <utilities:EnumToStringConverter x:Key="EnumStringConverter"/>
                 <BitmapImage UriSource="pack://application:,,,/Resources/x.png" x:Key="XImage"/>
                 <BitmapImage UriSource="pack://application:,,,/Resources/o.png" x:Key="OImage"/>
             </ResourceDictionary>

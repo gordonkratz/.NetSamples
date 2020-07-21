@@ -4,9 +4,9 @@ using System.Globalization;
 using System.Text;
 using System.Windows.Data;
 
-namespace SampleApp.Core
+namespace Ui.Utilities
 {
-    class EnumToStringConverter : IValueConverter
+    public class EnumToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

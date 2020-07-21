@@ -1,4 +1,4 @@
-﻿using SampleApp.Core;
+﻿using Utilities;
 
 namespace SampleApp.TicTacToe
 {

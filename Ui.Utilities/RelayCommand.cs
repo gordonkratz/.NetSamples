@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 
-namespace SampleApp.Core
+namespace Ui.Utilities
 {
-    public class RelayCommand : ICommand 
+    public class RelayCommand : ICommand
     {
         private readonly Action<object> _action;
         private readonly Predicate<object> _canExecute;
@@ -36,7 +36,7 @@ namespace SampleApp.Core
 
     public class RelayCommand<T> : RelayCommand where T : class
     {
-        public RelayCommand(Action<T> action, Predicate<T> canExecute = null) 
+        public RelayCommand(Action<T> action, Predicate<T> canExecute = null)
             : base(x => action(x as T), x => canExecute?.Invoke(x as T) ?? true)
         {
         }

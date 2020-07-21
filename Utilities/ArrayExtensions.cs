@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace SampleApp.Core
+namespace Utilities
 {
     public static class ArrayExtensions
     {
         public static bool None<T>(this T[,] array, Func<T, bool> func)
         {
-            foreach(var item in array)
+            foreach (var item in array)
             {
                 if (func(item))
                     return false;

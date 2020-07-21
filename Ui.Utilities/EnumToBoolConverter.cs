@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Data;
 
-namespace SampleApp.Core
+namespace Ui.Utilities
 {
     public class EnumToBoolConverter : IValueConverter
     {
