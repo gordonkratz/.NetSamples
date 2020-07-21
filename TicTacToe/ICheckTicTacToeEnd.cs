@@ -1,6 +1,6 @@
 ﻿using Utilities;
 
-namespace SampleApp.TicTacToe
+namespace TicTacToe
 {
     public interface ITicTacToeItem
     {

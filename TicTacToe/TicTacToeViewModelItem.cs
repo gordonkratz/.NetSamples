@@ -1,6 +1,7 @@
-﻿using Ui.Utilities;
+﻿using TicTacToe;
+using Ui.Utilities;
 
-namespace SampleApp.TicTacToe
+namespace TicTacToe
 {
     public class TicTacToeViewModelItem : ViewModelBase, ITicTacToeItem
     {

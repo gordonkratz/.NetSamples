@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SampleApp.TicTacToe
+namespace TicTacToe
 {
     /// <summary>
     /// Interaction logic for TicTacToeControl.xaml

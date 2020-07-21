@@ -1,8 +1,5 @@
 ﻿using SampleApp.BindingSamples;
-using SampleApp.TicTacToe;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using TicTacToe;
 
 namespace SampleApp
 {

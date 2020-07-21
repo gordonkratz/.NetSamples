@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
-using SampleApp.TicTacToe;
+using TicTacToe;
 using System;
 
 namespace TicTacToeTests

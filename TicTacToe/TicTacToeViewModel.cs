@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Input;
 using Ui.Utilities;
 
-namespace SampleApp.TicTacToe
+namespace TicTacToe
 {
     public class TicTacToeViewModel : ViewModelBase
     {

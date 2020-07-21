@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         WindowStyle="SingleBorderWindow"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SampleApp" xmlns:bindingsamples="clr-namespace:SampleApp.BindingSamples" xmlns:tictactoe="clr-namespace:SampleApp.TicTacToe"
+        xmlns:local="clr-namespace:SampleApp" xmlns:bindingsamples="clr-namespace:SampleApp.BindingSamples"
+        xmlns:tictactoe="clr-namespace:TicTacToe;assembly=TicTacToe"
         mc:Ignorable="d"
         d:DataContext="SampleAppDataContext"
         Title="Sample App" Height="450" Width="800">

@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TicTacToe\TicTacToe.csproj" />
     <ProjectReference Include="..\Ui.Utilities\Ui.Utilities.csproj" />
     <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
@@ -20,6 +21,10 @@
   <ItemGroup>
     <Resource Include="Resources\o.png" />
     <Resource Include="Resources\x.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TicTacToe\" />
   </ItemGroup>
 
 </Project>
