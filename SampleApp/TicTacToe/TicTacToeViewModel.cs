@@ -33,8 +33,8 @@ namespace SampleApp.TicTacToe
 
         private void MakeMoveInternal(TicTacToeViewModelItem item)
         {
-            item.State = _nextMover;
-            _nextMover = _nextMover == TicTacToeState.O ? TicTacToeState.X : TicTacToeState.O;
+            item.State = NextMover;
+            NextMover = NextMover == TicTacToeState.O ? TicTacToeState.X : TicTacToeState.O;
             (var isEndCondition, var winner) = _checker.IsGameOver(_itemsArray);
             if (isEndCondition)
                 ClearBoard();
@@ -48,7 +48,12 @@ namespace SampleApp.TicTacToe
             }
         }
 
-        public ObservableCollection<TicTacToeViewModelItem> CellCollection { get; } 
+        public ObservableCollection<TicTacToeViewModelItem> CellCollection { get; }
+        public TicTacToeState NextMover
+        {
+            get => _nextMover;
+            set => OnPropertyChanged(ref _nextMover, value);
+        }
     }
 
     public enum TicTacToeState
