@@ -10,6 +10,8 @@
         <ItemsControl.Resources>
             <ResourceDictionary>
                 <core:EnumToBoolConverter x:Key="EnumBoolConverter"/>
+                <BitmapImage UriSource="pack://application:,,,/Resources/x.png" x:Key="XImage"/>
+                <BitmapImage UriSource="pack://application:,,,/Resources/o.png" x:Key="OImage"/>
             </ResourceDictionary>
         </ItemsControl.Resources>
         <ItemsControl.ItemsPanel>
@@ -20,19 +22,31 @@
 
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <Button Grid.Column="{Binding Column, Mode=OneWay}"
-                        Grid.Row="{Binding Row, Mode=OneWay}"
+                <Button Width="200px" Height="200px"
                         Command="{Binding Path=DataContext.MakeMove, ElementName=Board}"
                         CommandParameter="{Binding}"
                         IsEnabled="{Binding State, Converter={StaticResource EnumBoolConverter},
                             ConverterParameter={x:Static local:TicTacToeState.None}}">
-                    <Button.Content>
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Text="{Binding State}"/>
-                            <TextBlock Text="{Binding Row, StringFormat=Row: {0}}"/>
-                            <TextBlock Text="{Binding Column, StringFormat=Row: {0}}"/>
-                        </StackPanel>
-                    </Button.Content>
+                    <Button.Style>
+                        <Style TargetType="Button" x:Shared="false">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding State}" Value="{x:Static local:TicTacToeState.O}">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <Image Source="{StaticResource OImage}" Width="200px" Height="200px"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding State}" Value="{x:Static local:TicTacToeState.X}">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <Image Source="{StaticResource XImage}" Width="200px" Height="200px"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                 </Button>
             </DataTemplate>
         </ItemsControl.ItemTemplate>

@@ -7,4 +7,14 @@
     <StartupObject>SampleApp.App</StartupObject>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\o.png" />
+    <None Remove="Resources\x.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\o.png" />
+    <Resource Include="Resources\x.png" />
+  </ItemGroup>
+
 </Project>
