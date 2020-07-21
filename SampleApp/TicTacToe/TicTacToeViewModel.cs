@@ -1,4 +1,5 @@
 ﻿using SampleApp.Core;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -8,27 +9,19 @@ namespace SampleApp.TicTacToe
     public class TicTacToeViewModel : ViewModelBase
     {
         public ICommand MakeMove { get; }
-        public static readonly int Dimension = 3;
 
+        private int _dimension = 3;
         private TicTacToeState _nextMover = TicTacToeState.X;
-        private readonly TicTacToeViewModelItem[,] _itemsArray;
+        private TicTacToeViewModelItem[,] _itemsArray;
         private readonly ICheckTicTacToeEnd<TicTacToeViewModelItem> _checker;
 
         public TicTacToeViewModel()
         {
             _checker = new NaiveChecker<TicTacToeViewModelItem>();
-            _itemsArray = new TicTacToeViewModelItem[Dimension, Dimension];
-            for(int i = 0; i < Dimension; i++)
-            {
-                for(int j = 0; j < Dimension; j++)
-                {
-                    _itemsArray[i, j] = new TicTacToeViewModelItem(i, j);
-                }
-            }
 
-            CellCollection = new ObservableCollection<TicTacToeViewModelItem>(
-                _itemsArray.Cast<TicTacToeViewModelItem>().OrderBy(i => i.Column).ThenBy(i => i.Row));
+            CellCollection = new ObservableCollection<TicTacToeViewModelItem>();
             MakeMove = new RelayCommand<TicTacToeViewModelItem>(MakeMoveInternal);
+            UpdateDimension();
         }
 
         private void MakeMoveInternal(TicTacToeViewModelItem item)
@@ -42,24 +35,57 @@ namespace SampleApp.TicTacToe
 
         private void ClearBoard()
         {
-            foreach(var item in _itemsArray)
+            foreach (var item in _itemsArray)
             {
                 item.State = TicTacToeState.None;
             }
         }
 
         public ObservableCollection<TicTacToeViewModelItem> CellCollection { get; }
+
         public TicTacToeState NextMover
         {
             get => _nextMover;
             set => OnPropertyChanged(ref _nextMover, value);
+        }
+
+        public int Dimension
+        {
+            get => _dimension;
+            set
+            {
+                if (OnPropertyChanged(ref _dimension, value))
+                {
+                    UpdateDimension();
+                }
+            }
+        }
+
+        private void UpdateDimension()
+        {
+            _itemsArray = new TicTacToeViewModelItem[Dimension, Dimension];
+            for (int i = 0; i < Dimension; i++)
+            {
+                for (int j = 0; j < Dimension; j++)
+                {
+                    _itemsArray[i, j] = new TicTacToeViewModelItem(i, j);
+                }
+            }
+
+            CellCollection.Clear();
+            _itemsArray.Cast<TicTacToeViewModelItem>()
+                .OrderBy(i => i.Column)
+                .ThenBy(i => i.Row)
+                .ToList()
+                .ForEach(CellCollection.Add);
+
         }
     }
 
     public enum TicTacToeState
     {
         None = 0,
-        X = 1, 
+        X = 1,
         O = 2,
     }
 }
