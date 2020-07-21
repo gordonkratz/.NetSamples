@@ -8,7 +8,7 @@
         xmlns:tictactoe="clr-namespace:TicTacToe;assembly=TicTacToe"
         mc:Ignorable="d"
         d:DataContext="SampleAppDataContext"
-        Title="Sample App" Height="450" Width="800">
+        Title="Sample App">
     <TabControl>
         <TabItem Header="Tic Tac Toe">
             <tictactoe:TicTacToeControl DataContext="{Binding TicTacToeViewModel}"/>

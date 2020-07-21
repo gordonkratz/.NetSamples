@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="TicTacToe\**" />
+    <EmbeddedResource Remove="TicTacToe\**" />
+    <None Remove="TicTacToe\**" />
+    <Page Remove="TicTacToe\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\o.png" />
     <None Remove="Resources\x.png" />
   </ItemGroup>
@@ -21,10 +28,6 @@
   <ItemGroup>
     <Resource Include="Resources\o.png" />
     <Resource Include="Resources\x.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="TicTacToe\" />
   </ItemGroup>
 
 </Project>
