@@ -2,14 +2,13 @@
 
 namespace TicTacToe
 {
-    interface IComputerLogic<T> where T : ITicTacToeItem
+    public interface IComputerLogic<T> where T : ITicTacToeItem
     {
         bool TryMakeComputerChoice(T[,] board, TicTacToeState nextMover, out T selection);
     }
 
     public class RandomLogic<T> : IComputerLogic<T> where T : ITicTacToeItem
     {
-        private Random _rand = new Random();
         public bool TryMakeComputerChoice(T[,] board, TicTacToeState nextMover, out T selection)
         {
             foreach(var item in board)

@@ -13,6 +13,7 @@ namespace TicTacToe
     public partial class TicTacToeControl : UserControl
     {
         public TicTacToeMode[] TicTacToeModes { get; } = Enum.GetValues(typeof(TicTacToeMode)).Cast<TicTacToeMode>().ToArray();
+        public int[] BoardSizeOptions { get; } = Enumerable.Range(3, 10).ToArray();
 
         TicTacToeViewModel _vm;
         public TicTacToeControl()

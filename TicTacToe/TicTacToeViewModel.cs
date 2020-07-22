@@ -18,10 +18,11 @@ namespace TicTacToe
         private readonly ICheckTicTacToeEnd<TicTacToeViewModelItem> _checker;
         private readonly IComputerLogic<TicTacToeViewModelItem> _computerLogic;
 
-        public TicTacToeViewModel()
+        public TicTacToeViewModel(ICheckTicTacToeEnd<TicTacToeViewModelItem> checker, 
+            IComputerLogic<TicTacToeViewModelItem> logic)
         {
-            _checker = new NaiveChecker<TicTacToeViewModelItem>();
-            _computerLogic = new RandomLogic<TicTacToeViewModelItem>();
+            _checker = checker;
+            _computerLogic = logic;
 
             CellCollection = new ObservableCollection<TicTacToeViewModelItem>();
             MakeMove = new RelayCommand<TicTacToeViewModelItem>(MakeMoveCommandInternal);

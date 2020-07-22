@@ -28,11 +28,15 @@
         <TextBlock Text="{Binding NextMover, StringFormat=Next Turn: {0}, Converter={StaticResource EnumStringConverter}}"
                    FontSize="25"/>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
-            <Label Content="Mode:"/>
-            <ComboBox SelectedValue="{Binding Mode}" ItemsSource="{Binding TicTacToeModes, ElementName=Control}"/>
+            <Label Content="Mode:" VerticalAlignment="Center"/>
+            <ComboBox SelectedValue="{Binding Mode}" 
+                      VerticalAlignment="Center"
+                      ItemsSource="{Binding TicTacToeModes, ElementName=Control}"/>
             <Label Content="Board size:" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding BoardSize}" MinWidth="100"/>
-            <Button Command="{Binding ResetCommand}" Content="Reset Board" Margin="7" Padding="4"/>
+            <ComboBox SelectedValue="{Binding BoardSize}"
+                      ItemsSource="{Binding BoardSizeOptions, ElementName=Control}"
+                      VerticalAlignment="Center" />
+            <Button Command="{Binding ResetCommand}" Content="Reset Board" VerticalAlignment="Center" Margin="3"/>
         </StackPanel>
         <Viewbox Stretch="Uniform"
                  Grid.Row="1"
