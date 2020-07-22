@@ -20,10 +20,27 @@ namespace TicTacToe
     /// </summary>
     public partial class TicTacToeControl : UserControl
     {
+        TicTacToeViewModel _vm;
         public TicTacToeControl()
         {
             InitializeComponent();
-        }       
+            this.DataContextChanged += TicTacToeControl_DataContextChanged;
+        }
+
+        private void TicTacToeControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if(_vm != null)
+                _vm.GameOver -= OnGameFinished;
+            _vm = e.NewValue as TicTacToeViewModel;
+            if(_vm != null)
+                _vm.GameOver += OnGameFinished;
+        }
+
+        private void OnGameFinished(TicTacToeState winner)
+        {
+            MessageBox.Show($"{winner} has won the game! Play again?", "Game over", MessageBoxButton.OK, MessageBoxImage.Question);
+            _vm.Reset();
+        }
     }
 
     public class TicTacToeButtonConverter : IValueConverter

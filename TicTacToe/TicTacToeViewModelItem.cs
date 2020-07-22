@@ -1,5 +1,4 @@
-﻿using TicTacToe;
-using Ui.Utilities;
+﻿using Ui.Utilities;
 
 namespace TicTacToe
 {
@@ -7,11 +6,9 @@ namespace TicTacToe
     {
         private TicTacToeState _state;
 
-        public TicTacToeViewModelItem(int column, int row)
+        public TicTacToeViewModelItem()
         {
             _state = TicTacToeState.None;
-            Column = column;
-            Row = row;
         }
 
         public TicTacToeState State 
@@ -19,9 +16,5 @@ namespace TicTacToe
             get => _state;
             set => OnPropertyChanged(ref _state, value);
         }
-
-        public int Column { get; }
-
-        public int Row { get; }
     }
 }

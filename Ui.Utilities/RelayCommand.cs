@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 
 namespace Ui.Utilities
@@ -25,7 +23,7 @@ namespace Ui.Utilities
 
         public bool CanExecute(object parameter)
         {
-            return _canExecute?.Invoke(parameter) ?? false;
+            return _canExecute?.Invoke(parameter) ?? true;
         }
 
         public void Execute(object parameter)

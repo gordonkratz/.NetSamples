@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Input;
 using Ui.Utilities;
 
@@ -9,9 +8,11 @@ namespace TicTacToe
     public class TicTacToeViewModel : ViewModelBase
     {
         public ICommand MakeMove { get; }
+        public ICommand ResetCommand { get; }
 
-        private int _dimension = 3;
+        private int _boardSize = 3;
         private TicTacToeState _nextMover = TicTacToeState.X;
+        private event Action<TicTacToeState> _gameOver;
         private TicTacToeViewModelItem[,] _itemsArray;
         private readonly ICheckTicTacToeEnd<TicTacToeViewModelItem> _checker;
 
@@ -21,7 +22,14 @@ namespace TicTacToe
 
             CellCollection = new ObservableCollection<TicTacToeViewModelItem>();
             MakeMove = new RelayCommand<TicTacToeViewModelItem>(MakeMoveInternal);
-            UpdateDimension();
+            ResetCommand = new RelayCommand(Reset);
+            UpdateBoardSize();
+        }
+
+        public event Action<TicTacToeState> GameOver
+        {
+            add => _gameOver += value;
+            remove => _gameOver -= value;
         }
 
         private void MakeMoveInternal(TicTacToeViewModelItem item)
@@ -30,10 +38,12 @@ namespace TicTacToe
             NextMover = NextMover == TicTacToeState.O ? TicTacToeState.X : TicTacToeState.O;
             (var isEndCondition, var winner) = _checker.IsGameOver(_itemsArray);
             if (isEndCondition)
-                ClearBoard();
+            {
+                _gameOver?.Invoke(winner);
+            }
         }
 
-        private void ClearBoard()
+        public void Reset()
         {
             foreach (var item in _itemsArray)
             {
@@ -49,36 +59,30 @@ namespace TicTacToe
             set => OnPropertyChanged(ref _nextMover, value);
         }
 
-        public int Dimension
+        public int BoardSize
         {
-            get => _dimension;
+            get => _boardSize;
             set
             {
-                if (OnPropertyChanged(ref _dimension, value))
+                if (OnPropertyChanged(ref _boardSize, value))
                 {
-                    UpdateDimension();
+                    UpdateBoardSize();
                 }
             }
         }
 
-        private void UpdateDimension()
+        private void UpdateBoardSize()
         {
-            _itemsArray = new TicTacToeViewModelItem[Dimension, Dimension];
-            for (int i = 0; i < Dimension; i++)
+            CellCollection.Clear();
+            _itemsArray = new TicTacToeViewModelItem[BoardSize, BoardSize];
+            for (int i = 0; i < BoardSize; i++)
             {
-                for (int j = 0; j < Dimension; j++)
+                for (int j = 0; j < BoardSize; j++)
                 {
-                    _itemsArray[i, j] = new TicTacToeViewModelItem(i, j);
+                    CellCollection.Add(_itemsArray[i, j] = new TicTacToeViewModelItem());
+
                 }
             }
-
-            CellCollection.Clear();
-            _itemsArray.Cast<TicTacToeViewModelItem>()
-                .OrderBy(i => i.Column)
-                .ThenBy(i => i.Row)
-                .ToList()
-                .ForEach(CellCollection.Add);
-
         }
     }
 

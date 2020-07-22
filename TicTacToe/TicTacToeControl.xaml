@@ -12,7 +12,6 @@
             <ResourceDictionary>
                 <utilities:EnumToBoolConverter x:Key="EnumBoolConverter"/>
                 <utilities:EnumToStringConverter x:Key="EnumStringConverter"/>
-                <local:ButtonSizeConverter x:Key="ButtonSizeConverter"/>
                 <BitmapImage UriSource="pack://application:,,,/Resources/x.png" x:Key="XImage"/>
                 <BitmapImage UriSource="pack://application:,,,/Resources/o.png" x:Key="OImage"/>
             </ResourceDictionary>
@@ -28,8 +27,9 @@
         <TextBlock Text="{Binding NextMover, StringFormat=Next Turn: {0}, Converter={StaticResource EnumStringConverter}}"
                    FontSize="25"/>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
-            <Label Content="Dimensions:"/>
-            <TextBox Text="{Binding Dimension}" MinWidth="100"/>
+            <Label Content="Board size:" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding BoardSize}" MinWidth="100"/>
+            <Button Command="{Binding ResetCommand}" Content="Reset Board" Margin="7" Padding="4"/>
         </StackPanel>
         <Viewbox Stretch="Uniform"
                  Grid.Row="1"
@@ -39,7 +39,7 @@
             <ItemsControl x:Name="Board" ItemsSource="{Binding CellCollection}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate >
-                        <UniformGrid Rows="{Binding Dimension}" Columns="{Binding Dimension}" />
+                        <UniformGrid Rows="{Binding BoardSize}" Columns="{Binding BoardSize}" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
 
@@ -65,9 +65,6 @@
                                                     <Image Source="{StaticResource XImage}"/>
                                                 </Setter.Value>
                                             </Setter>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding State}" Value="{x:Static local:TicTacToeState.None}">
-                                            <Setter Property="Content" Value="?"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
