@@ -12,16 +12,19 @@ namespace TicTacToe
 
         private int _boardSize = 3;
         private TicTacToeState _nextMover = TicTacToeState.X;
+        private TicTacToeMode _mode = TicTacToeMode.TwoPlayer;
         private event Action<TicTacToeState> _gameOver;
         private TicTacToeViewModelItem[,] _itemsArray;
         private readonly ICheckTicTacToeEnd<TicTacToeViewModelItem> _checker;
+        private readonly IComputerLogic<TicTacToeViewModelItem> _computerLogic;
 
         public TicTacToeViewModel()
         {
             _checker = new NaiveChecker<TicTacToeViewModelItem>();
+            _computerLogic = new RandomLogic<TicTacToeViewModelItem>();
 
             CellCollection = new ObservableCollection<TicTacToeViewModelItem>();
-            MakeMove = new RelayCommand<TicTacToeViewModelItem>(MakeMoveInternal);
+            MakeMove = new RelayCommand<TicTacToeViewModelItem>(MakeMoveCommandInternal);
             ResetCommand = new RelayCommand(Reset);
             UpdateBoardSize();
         }
@@ -32,7 +35,23 @@ namespace TicTacToe
             remove => _gameOver -= value;
         }
 
-        private void MakeMoveInternal(TicTacToeViewModelItem item)
+        private void MakeMoveCommandInternal(TicTacToeViewModelItem item)
+        {
+            
+            if (!UpdateBoard(item) && Mode == TicTacToeMode.VsComputer)
+            {
+                if(_computerLogic.TryMakeComputerChoice(_itemsArray, NextMover, out var selected))
+                {
+                    UpdateBoard(selected);
+                }
+                else
+                {
+                    Reset();
+                }
+            }
+        }
+
+        private bool UpdateBoard(TicTacToeViewModelItem item)
         {
             item.State = NextMover;
             NextMover = NextMover == TicTacToeState.O ? TicTacToeState.X : TicTacToeState.O;
@@ -41,6 +60,7 @@ namespace TicTacToe
             {
                 _gameOver?.Invoke(winner);
             }
+            return isEndCondition;
         }
 
         public void Reset()
@@ -71,6 +91,18 @@ namespace TicTacToe
             }
         }
 
+        public TicTacToeMode Mode
+        {
+            get => _mode;
+            set
+            {
+                if (OnPropertyChanged(ref _mode, value))
+                {
+                    Reset();
+                }
+            }
+        }
+
         private void UpdateBoardSize()
         {
             CellCollection.Clear();
@@ -91,5 +123,11 @@ namespace TicTacToe
         None = 0,
         X = 1,
         O = 2,
+    }
+
+    public enum TicTacToeMode
+    {
+        TwoPlayer,
+        VsComputer
     }
 }
