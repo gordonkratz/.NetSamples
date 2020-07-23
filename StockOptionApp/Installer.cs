@@ -10,7 +10,9 @@ namespace StockOptionApp
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.RegisterPlugin<Plugin, Control>();
-            container.Register(Component.For<ViewModel>());
+            container.Register(Component.For<ViewModel>(),
+                Component.For<IProvideFlexOptionData>().ImplementedBy<FlexOptionDownloader>()
+                );
         }
     }
 }
