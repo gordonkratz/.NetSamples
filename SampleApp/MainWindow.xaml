@@ -9,10 +9,7 @@
         mc:Ignorable="d"
         d:DataContext="SampleAppDataContext"
         Title="Sample App">
-    <TabControl>
-        <TabItem Header="Tic Tac Toe">
-            <tictactoe:TicTacToeControl DataContext="{Binding TicTacToeViewModel}"/>
-        </TabItem>
+    <TabControl x:Name="_tabControl">
         <TabItem Header="Binding Samples">
             <bindingsamples:BindingSamplesControl DataContext="{Binding BindingSampleViewModel}"/>
         </TabItem>

@@ -11,7 +11,8 @@ namespace TicTacToe
             container.Register(
                 Component.For<TicTacToeViewModel>(),
                 Component.For(typeof(ICheckTicTacToeEnd<>)).ImplementedBy(typeof(NaiveChecker<>)),
-                Component.For(typeof(IComputerLogic<>)).ImplementedBy(typeof(RandomLogic<>))
+                Component.For(typeof(IComputerLogic<>)).ImplementedBy(typeof(RandomLogic<>)),
+                Component.For<TicTacToeControl>()
                 );
         }
     }

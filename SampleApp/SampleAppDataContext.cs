@@ -7,6 +7,6 @@ namespace SampleApp
     {
         public BindingSamplesViewModel BindingSampleViewModel { get; } = new BindingSamplesViewModel();
 
-        public TicTacToeViewModel TicTacToeViewModel { get; } = new TicTacToeViewModel();
+        public TicTacToeViewModel TicTacToeViewModel { get; } = new TicTacToeViewModel(new NaiveChecker<TicTacToeViewModelItem>(), new RandomLogic<TicTacToeViewModelItem>());
     }
 }

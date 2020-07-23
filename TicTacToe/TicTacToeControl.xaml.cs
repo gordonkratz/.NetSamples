@@ -16,19 +16,12 @@ namespace TicTacToe
         public int[] BoardSizeOptions { get; } = Enumerable.Range(3, 10).ToArray();
 
         TicTacToeViewModel _vm;
-        public TicTacToeControl()
+
+        public TicTacToeControl(TicTacToeViewModel vm)
         {
             InitializeComponent();
-            this.DataContextChanged += TicTacToeControl_DataContextChanged;
-        }
-
-        private void TicTacToeControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if(_vm != null)
-                _vm.GameOver -= OnGameFinished;
-            _vm = e.NewValue as TicTacToeViewModel;
-            if(_vm != null)
-                _vm.GameOver += OnGameFinished;
+            DataContext = _vm = vm;
+            _vm.GameOver += OnGameFinished;
         }
 
         private void OnGameFinished(TicTacToeState winner)

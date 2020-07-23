@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <StartupObject>SampleApp.App</StartupObject>
+    <StartupObject>SampleApp.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Castle.Core" Version="4.4.1" />
+    <PackageReference Include="Castle.Windsor" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FrontendFramework\FrontendFramework.csproj" />
     <ProjectReference Include="..\TicTacToe\TicTacToe.csproj" />
     <ProjectReference Include="..\Ui.Utilities\Ui.Utilities.csproj" />
     <ProjectReference Include="..\Utilities\Utilities.csproj" />
