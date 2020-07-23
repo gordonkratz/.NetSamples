@@ -3,16 +3,14 @@ using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 
-namespace SampleApp
+namespace FrontendFramework
 {
-    class Installer : IWindsorInstaller
+    internal class FrontendFrameworkInstaller : IWindsorInstaller
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            
-            container.Install(new TicTacToe.Installer(),
-                new BindingSamples.Installer()
-                );
+            container.Register(Component.For<MainWindow>());
+            container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
         }
     }
 }

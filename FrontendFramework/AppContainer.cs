@@ -1,13 +1,13 @@
 ﻿using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
 
-namespace SampleApp
+namespace FrontendFramework
 {
     class AppContainer : WindsorContainer
     {
         public AppContainer()
         {
-            Install(new Installer());
+            Install(new FrontendFrameworkInstaller());
         }
     }
 }

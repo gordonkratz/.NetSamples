@@ -1,9 +1,8 @@
-﻿using FrontendFramework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace SampleApp
+namespace FrontendFramework
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
