@@ -1,6 +1,7 @@
-﻿using System.Windows;
+﻿using FrontendFramework;
+using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
-using TicTacToe;
 
 namespace SampleApp
 {
@@ -9,15 +10,19 @@ namespace SampleApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(TicTacToeControl control)
+        public MainWindow(IEnumerable<IPluginWrapper> plugins)
         {
             InitializeComponent();
-            var tabItem = new TabItem
+            foreach(var plugin in plugins)
             {
-                Content = control
-            };
+                var tabItem = new TabItem
+                {
+                    Content = plugin.Control,
+                    Header = plugin.Plugin.Header
+                };
 
-            _tabControl.Items.Add(tabItem);
+                _tabControl.Items.Add(tabItem);
+            }
         }
     }
 }

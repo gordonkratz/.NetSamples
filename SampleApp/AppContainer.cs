@@ -1,4 +1,5 @@
-﻿using Castle.Windsor;
+﻿using Castle.MicroKernel.Resolvers.SpecializedResolvers;
+using Castle.Windsor;
 
 namespace SampleApp
 {
