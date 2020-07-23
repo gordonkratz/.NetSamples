@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilities", "..\Utilities\U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToe", "..\TicTacToe\TicTacToe.csproj", "{7E6FAA20-B13A-4941-8DE3-4460CBFCC7EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontendFramework", "..\FrontendFramework\FrontendFramework.csproj", "{279715C5-768B-4F54-8E0B-FEF8B73A5721}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontendFramework", "..\FrontendFramework\FrontendFramework.csproj", "{279715C5-768B-4F54-8E0B-FEF8B73A5721}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BindingSamples", "..\BindingSamples\BindingSamples.csproj", "{DE5930E0-4543-464B-AF28-0A936CE249AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{279715C5-768B-4F54-8E0B-FEF8B73A5721}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{279715C5-768B-4F54-8E0B-FEF8B73A5721}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{279715C5-768B-4F54-8E0B-FEF8B73A5721}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE5930E0-4543-464B-AF28-0A936CE249AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE5930E0-4543-464B-AF28-0A936CE249AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE5930E0-4543-464B-AF28-0A936CE249AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE5930E0-4543-464B-AF28-0A936CE249AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

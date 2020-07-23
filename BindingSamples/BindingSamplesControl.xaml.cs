@@ -11,16 +11,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SampleApp.BindingSamples
+namespace BindingSamples
 {
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
     public partial class BindingSamplesControl : UserControl
     {
-        public BindingSamplesControl()
+        public BindingSamplesControl(BindingSamplesViewModel vm)
         {
             InitializeComponent();
+            DataContext = vm;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

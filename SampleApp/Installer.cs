@@ -9,11 +9,13 @@ namespace SampleApp
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.Register(Component.For<SampleAppDataContext>(), 
+            container.Register(
                 Component.For<App>(),
                 Component.For<MainWindow>());
             container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
-            container.Install(new TicTacToe.Installer());
+            container.Install(new TicTacToe.Installer(),
+                new BindingSamples.Installer()
+                );
         }
     }
 }
