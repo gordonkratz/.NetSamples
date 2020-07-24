@@ -1,17 +1,19 @@
-﻿using System.Collections.ObjectModel;
+﻿using FrontendFramework;
+using System.Collections.ObjectModel;
 using Ui.Utilities;
+using Utilities.Threading;
 
 namespace StockOptionApp
 {
     public class ViewModel : ViewModelBase
     {
 
-        public ViewModel(IProvideFlexOptionData provider)
+        public ViewModel(IProvideFlexOptionData provider, IWpfThread invoker)
         {
-            provider.OnNewData += _provider_OnNewData;
+            provider.OnNewData += invoker.Wrap<FlexOptionData>(OnNewData);
         }
 
-        private void _provider_OnNewData(FlexOptionData data)
+        private void OnNewData(FlexOptionData data)
         {
             FlexOptionData.Add(data);
         }

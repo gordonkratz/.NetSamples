@@ -12,6 +12,10 @@ namespace FrontendFramework
             container.Install(new T());
 
             var app = new Application();
+
+            // done to guarantee that the wpf invoker has access to the UI thread
+            var dispatcher = container.Resolve<IWpfThread>();
+
             app.Run(container.Resolve<MainWindow>());
         }
     }

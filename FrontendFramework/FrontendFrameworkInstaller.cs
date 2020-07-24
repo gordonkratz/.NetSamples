@@ -9,7 +9,9 @@ namespace FrontendFramework
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.Register(Component.For<MainWindow>());
+            container.Register(Component.For<MainWindow>(),
+                Component.For<IWpfThread>().ImplementedBy<WpfDispatcher>()
+                );
             container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
         }
     }
