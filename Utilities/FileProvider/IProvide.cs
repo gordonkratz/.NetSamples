@@ -2,22 +2,22 @@
 using System;
 using System.Collections.Generic;
 
-namespace StockOptionApp
+namespace Utilities.FileProvider
 {
     public interface IProvide<T>
     {
         event Action<T> OnNewData;
     }
 
-    public class FlexOptionDataProvider : IProvide<FlexOptionData>
+    public class BasicProvider<T> : IProvide<T>
     {
-        private List<FlexOptionData> _records = new List<FlexOptionData>();
-        private readonly IParse<FlexOptionData> _parser;
-        private readonly IDownloadFile<FlexOptionData> _fileDownloader;
+        private List<T> _records = new List<T>();
+        private readonly IParse<T> _parser;
+        private readonly IDownloadFile<T> _fileDownloader;
 
-        private event Action<FlexOptionData> _onNewData;
+        private event Action<T> _onNewData;
 
-        public FlexOptionDataProvider(IDownloadFile<FlexOptionData> fileDownloader, IParse<FlexOptionData> parser)
+        public BasicProvider(IDownloadFile<T> fileDownloader, IParse<T> parser)
         {
             _parser = parser;
             _fileDownloader = fileDownloader;
@@ -27,16 +27,16 @@ namespace StockOptionApp
         private void OnFileReady(string obj)
         {
             var records = obj.Split(Environment.NewLine);
-            foreach(var item in records)
+            foreach (var item in records)
             {
-                if(_parser.TryParse(item, out var data))
+                if (_parser.TryParse(item, out var data))
                 {
                     _onNewData?.Invoke(data);
                 }
             }
         }
 
-        public event Action<FlexOptionData> OnNewData
+        public event Action<T> OnNewData
         {
             add
             {

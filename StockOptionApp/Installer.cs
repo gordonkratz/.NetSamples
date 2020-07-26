@@ -1,5 +1,4 @@
-﻿using Castle.Facilities.Startable;
-using Castle.MicroKernel.Registration;
+﻿using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using FrontendFramework;
@@ -16,7 +15,6 @@ namespace StockOptionApp
         {
             container.RegisterPlugin<Plugin, Control>();
             container.Register(Component.For<ViewModel>(),
-                Component.For<IProvide<FlexOptionData>>().ImplementedBy<FlexOptionDataProvider>(),
                 Component.For<IParse<FlexOptionData>>().ImplementedBy<FlexOptionParser>(),
                 Component.For<IDownloadFile<FlexOptionData>>().ImplementedBy<FlexOptionFileDownloader>()
                 );
