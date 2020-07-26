@@ -1,4 +1,5 @@
-﻿using Castle.MicroKernel.Registration;
+﻿using Castle.Facilities.Startable;
+using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
@@ -12,6 +13,7 @@ namespace FrontendFramework
             container.Register(Component.For<MainWindow>(),
                 Component.For<IWpfThread>().ImplementedBy<WpfDispatcher>()
                 );
+            container.AddFacility<StartableFacility>();
             container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
         }
     }

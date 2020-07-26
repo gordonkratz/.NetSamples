@@ -2,6 +2,9 @@
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using FrontendFramework;
+using StockOptionApp.FIleDownload;
+using System.IO;
+using System.Net.Http;
 
 namespace StockOptionApp
 {
@@ -11,7 +14,10 @@ namespace StockOptionApp
         {
             container.RegisterPlugin<Plugin, Control>();
             container.Register(Component.For<ViewModel>(),
-                Component.For<IProvideFlexOptionData>().ImplementedBy<FlexOptionDownloader>()
+                Component.For<IProvide<FlexOptionData>>().ImplementedBy<FlexOptionDataProvider>(),
+                Component.For<ICsvParser<FlexOptionData>>().ImplementedBy<FlexOptionParser>(),
+                Component.For<IDownloadFile<FlexOptionData>>().ImplementedBy<FlecxOptionFileDownloader>(),
+                Component.For<HttpClient>()
                 );
         }
     }

@@ -8,7 +8,7 @@ namespace StockOptionApp
     public class ViewModel : ViewModelBase
     {
 
-        public ViewModel(IProvideFlexOptionData provider, IWpfThread invoker)
+        public ViewModel(IProvide<FlexOptionData> provider, IWpfThread invoker)
         {
             provider.OnNewData += invoker.Wrap<FlexOptionData>(OnNewData);
         }
