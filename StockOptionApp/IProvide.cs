@@ -12,12 +12,12 @@ namespace StockOptionApp
     public class FlexOptionDataProvider : IProvide<FlexOptionData>
     {
         private List<FlexOptionData> _records = new List<FlexOptionData>();
-        private readonly ICsvParser<FlexOptionData> _parser;
+        private readonly IParse<FlexOptionData> _parser;
         private readonly IDownloadFile<FlexOptionData> _fileDownloader;
 
         private event Action<FlexOptionData> _onNewData;
 
-        public FlexOptionDataProvider(IDownloadFile<FlexOptionData> fileDownloader, ICsvParser<FlexOptionData> parser)
+        public FlexOptionDataProvider(IDownloadFile<FlexOptionData> fileDownloader, IParse<FlexOptionData> parser)
         {
             _parser = parser;
             _fileDownloader = fileDownloader;

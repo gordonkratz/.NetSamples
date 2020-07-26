@@ -1,13 +1,14 @@
-﻿using Castle.MicroKernel.Resolvers.SpecializedResolvers;
-using Castle.Windsor;
+﻿using Castle.MicroKernel.Registration;
+using System.Linq;
+using Utilities.Castle;
 
 namespace FrontendFramework
 {
-    class AppContainer : WindsorContainer
+    class AppContainer : DependencyContainer
     {
-        public AppContainer()
+        public AppContainer(params IWindsorInstaller[] types) 
+            : base(types.Append(new FrontendFrameworkInstaller()).ToArray())
         {
-            Install(new FrontendFrameworkInstaller());
         }
     }
 }

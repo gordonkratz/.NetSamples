@@ -2,12 +2,7 @@
 
 namespace StockOptionApp.FIleDownload
 {
-    public interface ICsvParser<T>
-    {
-        bool TryParse(string line, out T data);
-    }
-
-    public class FlexOptionParser : ICsvParser<FlexOptionData>
+    public class FlexOptionParser : IParse<FlexOptionData>
     {
         public bool TryParse(string line, out FlexOptionData data)
         {

@@ -4,20 +4,23 @@ using System.Net.Http;
 
 namespace StockOptionApp.FIleDownload
 {
-    public interface IDownloadFile<T> : IStartable
+    public interface IDownloadFile<T>
     {
         event Action<string> OnFileReady;
     }
 
-    public class FlecxOptionFileDownloader : IDownloadFile<FlexOptionData>
+    public abstract class HttpDownloader<T> : IDownloadFile<T>
     {
         private readonly HttpClient _client;
-        string latest;
+        string _latest;
         event Action<string> _onFileReady;
 
-        public FlecxOptionFileDownloader(HttpClient client)
+        protected abstract string GetURL();
+
+        public HttpDownloader(HttpClient client)
         {
             _client = client;
+            Start();
         }
 
         public event Action<string> OnFileReady
@@ -25,8 +28,8 @@ namespace StockOptionApp.FIleDownload
             add
             {
                 _onFileReady += value;
-                if (latest != null)
-                    value(latest);
+                if (_latest != null)
+                    value(_latest);
             }
             remove
             {
@@ -38,10 +41,9 @@ namespace StockOptionApp.FIleDownload
         {
             try
             {
-                var requestDate = "20200723";
-                var uri = $"https://marketdata.theocc.com/flex-reports?reportType=PR&optionType=E&reportDate={requestDate}";
-                string responseBody = await _client.GetStringAsync(uri);
+                string responseBody = await _client.GetStringAsync(GetURL());
 
+                _latest = responseBody;
                 _onFileReady?.Invoke(responseBody);
             }
             catch (HttpRequestException e)
@@ -49,10 +51,6 @@ namespace StockOptionApp.FIleDownload
                 Console.WriteLine("\nException Caught!");
                 Console.WriteLine("Message :{0} ", e.Message);
             }
-        }
-
-        public void Stop()
-        {
         }
     }
 }

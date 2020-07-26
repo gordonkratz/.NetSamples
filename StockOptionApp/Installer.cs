@@ -1,13 +1,15 @@
-﻿using Castle.MicroKernel.Registration;
+﻿using Castle.Facilities.Startable;
+using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using FrontendFramework;
 using StockOptionApp.FIleDownload;
-using System.IO;
-using System.Net.Http;
+using Utilities.Castle;
+using Utilities.FileProvider;
 
 namespace StockOptionApp
 {
+    [InstallerDependsOn(typeof(FileDownloadInstaller))]
     public class Installer : IWindsorInstaller
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
@@ -15,9 +17,8 @@ namespace StockOptionApp
             container.RegisterPlugin<Plugin, Control>();
             container.Register(Component.For<ViewModel>(),
                 Component.For<IProvide<FlexOptionData>>().ImplementedBy<FlexOptionDataProvider>(),
-                Component.For<ICsvParser<FlexOptionData>>().ImplementedBy<FlexOptionParser>(),
-                Component.For<IDownloadFile<FlexOptionData>>().ImplementedBy<FlecxOptionFileDownloader>(),
-                Component.For<HttpClient>()
+                Component.For<IParse<FlexOptionData>>().ImplementedBy<FlexOptionParser>(),
+                Component.For<IDownloadFile<FlexOptionData>>().ImplementedBy<FlexOptionFileDownloader>()
                 );
         }
     }

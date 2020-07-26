@@ -8,8 +8,7 @@ namespace FrontendFramework
 
         public static void Run<T>() where T : IWindsorInstaller, new()
         {
-            var container = new AppContainer();
-            container.Install(new T());
+            var container = new AppContainer(new T());
 
             var app = new Application();
 
