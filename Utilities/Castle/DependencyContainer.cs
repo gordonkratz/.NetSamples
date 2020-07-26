@@ -3,6 +3,7 @@ using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Utilities.Castle
 {
@@ -23,11 +24,11 @@ namespace Utilities.Castle
             }
         }
 
-        private void AddDependencies(Type type, IWindsorInstaller installer, Dictionary<Type, IWindsorInstaller> set)
+        private void AddDependencies(Type type, IWindsorInstaller instance, Dictionary<Type, IWindsorInstaller> currentInstallers)
         {
-            if (set.ContainsKey(type))
+            if (currentInstallers.ContainsKey(type))
                 return;
-            set[type] = installer;
+            currentInstallers[type] = instance;
 
             var dependencies = type.GetAttribute<InstallerDependsOnAttribute>()?.InstallerTypes;
             if (dependencies == null)
@@ -35,7 +36,10 @@ namespace Utilities.Castle
 
             foreach (var d in dependencies)
             {
-                AddDependencies(d, Activator.CreateInstance(d) as IWindsorInstaller, set);
+                if (!typeof(IWindsorInstaller).IsAssignableFrom(d))
+                    throw new Exception($"{d} does not implement IWindsorInstaller. It cannot be installed");
+
+                AddDependencies(d, Activator.CreateInstance(d) as IWindsorInstaller, currentInstallers);
             }
         }
     }
