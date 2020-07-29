@@ -20,7 +20,6 @@ namespace StockOptionApp.FIleDownload
         public HttpDownloader(HttpClient client)
         {
             _client = client;
-            Start();
         }
 
         public event Action<string> OnFileReady

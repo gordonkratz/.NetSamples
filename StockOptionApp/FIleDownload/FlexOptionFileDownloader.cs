@@ -1,25 +1,22 @@
 ﻿using System.Net.Http;
+using Utilities.Configuration;
 
 namespace StockOptionApp.FIleDownload
 {
     internal class FlexOptionFileDownloader : HttpDownloader<FlexOptionData>
     {
-        private readonly FlexOptionDownloadConfig _config;
-        public FlexOptionFileDownloader(HttpClient client, FlexOptionDownloadConfig config) : base(client)
+        private readonly string _requestURI;
+        public FlexOptionFileDownloader(HttpClient client, IProvideConfiguration config) : base(client)
         {
-            _config = config;
+            _requestURI = config.GetValue("flex.option.file.uri");
+            Start();
         }
 
         protected override string GetURL()
         {
             var requestDate = "20200723";
-            return _config.RequestURI + requestDate;
+            return _requestURI + requestDate;
             //return $"https://marketdata.theocc.com/flex-reports?reportType=PR&optionType=E&reportDate={requestDate}";
         }
-    }
-
-    public class FlexOptionDownloadConfig
-    {
-        public string RequestURI { get; }
     }
 }

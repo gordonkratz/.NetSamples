@@ -5,16 +5,16 @@ using System.Linq;
 
 namespace Utilities.Configuration
 {
-    internal interface IRawConfigProvider
+    public interface IProvideConfiguration
     {
-        public IReadOnlyDictionary<string, string> Values { get; }
+        string GetValue(string key);
     }
 
-    internal class RawConfigProvider : IRawConfigProvider
+    internal class ConfigProvider : IProvideConfiguration
     {
         private Dictionary<string, string> _config = new Dictionary<string, string>();
 
-        public RawConfigProvider()
+        public ConfigProvider()
         {
             var filePath = "config.txt";
 
@@ -36,7 +36,11 @@ namespace Utilities.Configuration
             }
         }
 
-        public IReadOnlyDictionary<string, string> Values => _config;
+
+        public string GetValue(string key)
+        {
+            return _config[key];
+        }
 
         private class Config
         {

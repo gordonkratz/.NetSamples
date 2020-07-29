@@ -8,8 +8,8 @@ namespace Utilities.Configuration
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.Register(Component.For<IRawConfigProvider>().ImplementedBy<RawConfigProvider>(),
-                Component.For<ConfigDependecyResolver>());
+            container.Register(Component.For<IProvideConfiguration>().ImplementedBy<ConfigProvider>()
+                );
         }
     }
 }
