@@ -7,7 +7,7 @@ namespace Ui.Utilities
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected bool OnPropertyChanged<T>(ref T property, T newValue, [CallerMemberName] string memberName = null)
+        protected bool SetProperty<T>(ref T property, T newValue, [CallerMemberName] string memberName = null)
         {
             var old = property;
             property = newValue;

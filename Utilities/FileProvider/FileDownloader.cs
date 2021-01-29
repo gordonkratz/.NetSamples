@@ -7,6 +7,7 @@ namespace StockOptionApp.FIleDownload
     public interface IDownloadFile<T>
     {
         event Action<string> OnFileReady;
+        void Start();
     }
 
     public abstract class HttpDownloader<T> : IDownloadFile<T>

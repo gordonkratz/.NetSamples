@@ -7,6 +7,6 @@ namespace StockOptionApp
 {
     public class Plugin : IPlugin<Control>
     {
-        public string Header => "Stock Options";
+        public string Header => "Flex Option Marks";
     }
 }

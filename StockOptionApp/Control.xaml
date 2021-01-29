@@ -12,5 +12,10 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <DataGrid ItemsSource="{Binding FlexOptionData}"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button MinWidth="100" Margin="3" Command="{Binding Reload}">Reload</Button>
+            <Label VerticalAlignment="Center">Last Loaded: </Label>
+            <TextBlock VerticalAlignment="Center" Text="{Binding UpdateTime}"/>
+        </StackPanel>
     </Grid>
 </UserControl>

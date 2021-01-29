@@ -7,6 +7,8 @@ namespace Utilities.FileProvider
     public interface IProvide<T>
     {
         event Action<T> OnNewData;
+        event Action OnReset;
+        void Reset();
     }
 
     public class BasicProvider<T> : IProvide<T>
@@ -16,6 +18,7 @@ namespace Utilities.FileProvider
         private readonly IDownloadFile<T> _fileDownloader;
 
         private event Action<T> _onNewData;
+        private event Action _onReset;
 
         public BasicProvider(IDownloadFile<T> fileDownloader, IParse<T> parser)
         {
@@ -36,6 +39,12 @@ namespace Utilities.FileProvider
             }
         }
 
+        public void Reset()
+        {
+            _onReset?.Invoke();
+            _fileDownloader.Start();
+        }
+
         public event Action<T> OnNewData
         {
             add
@@ -47,6 +56,12 @@ namespace Utilities.FileProvider
             {
                 _onNewData -= value;
             }
+        }
+
+        public event Action OnReset
+        {
+            add { _onReset += value; }
+            remove { _onReset -= value; }
         }
     }
 }
