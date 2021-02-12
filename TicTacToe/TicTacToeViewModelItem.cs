@@ -14,7 +14,7 @@ namespace TicTacToe
         public TicTacToeState State 
         { 
             get => _state;
-            set => OnPropertyChanged(ref _state, value);
+            set => SetProperty(ref _state, value);
         }
     }
 }

@@ -77,7 +77,7 @@ namespace TicTacToe
         public TicTacToeState NextMover
         {
             get => _nextMover;
-            set => OnPropertyChanged(ref _nextMover, value);
+            set => SetProperty(ref _nextMover, value);
         }
 
         public int BoardSize
@@ -85,7 +85,7 @@ namespace TicTacToe
             get => _boardSize;
             set
             {
-                if (OnPropertyChanged(ref _boardSize, value))
+                if (SetProperty(ref _boardSize, value))
                 {
                     UpdateBoardSize();
                 }
@@ -97,7 +97,7 @@ namespace TicTacToe
             get => _mode;
             set
             {
-                if (OnPropertyChanged(ref _mode, value))
+                if (SetProperty(ref _mode, value))
                 {
                     Reset();
                 }
