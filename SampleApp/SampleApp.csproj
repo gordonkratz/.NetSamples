@@ -21,12 +21,13 @@
 
   <ItemGroup>
     <PackageReference Include="Castle.Core" Version="4.4.1" />
-    <PackageReference Include="Castle.Windsor" Version="5.0.1" />
+    <PackageReference Include="Castle.Windsor" Version="5.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BindingSamples\BindingSamples.csproj" />
     <ProjectReference Include="..\FrontendFramework\FrontendFramework.csproj" />
+    <ProjectReference Include="..\SudokuSolver\SudokuSolver.csproj" />
     <ProjectReference Include="..\TicTacToe\TicTacToe.csproj" />
     <ProjectReference Include="..\Ui.Utilities\Ui.Utilities.csproj" />
     <ProjectReference Include="..\Utilities\Utilities.csproj" />

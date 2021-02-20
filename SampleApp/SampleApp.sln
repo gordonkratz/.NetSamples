@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToe", "..\TicTacToe\T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontendFramework", "..\FrontendFramework\FrontendFramework.csproj", "{279715C5-768B-4F54-8E0B-FEF8B73A5721}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BindingSamples", "..\BindingSamples\BindingSamples.csproj", "{DE5930E0-4543-464B-AF28-0A936CE249AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BindingSamples", "..\BindingSamples\BindingSamples.csproj", "{DE5930E0-4543-464B-AF28-0A936CE249AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SudokuSolver", "..\SudokuSolver\SudokuSolver.csproj", "{A158A8E7-EF7C-447F-8F17-0EB4284685FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{DE5930E0-4543-464B-AF28-0A936CE249AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE5930E0-4543-464B-AF28-0A936CE249AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE5930E0-4543-464B-AF28-0A936CE249AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A158A8E7-EF7C-447F-8F17-0EB4284685FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A158A8E7-EF7C-447F-8F17-0EB4284685FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A158A8E7-EF7C-447F-8F17-0EB4284685FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A158A8E7-EF7C-447F-8F17-0EB4284685FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

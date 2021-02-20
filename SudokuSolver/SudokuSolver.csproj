@@ -3,14 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <AssemblyName>I</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Castle.Windsor" Version="5.0.1" />
+    <PackageReference Include="Castle.Core" Version="4.4.1" />
+    <PackageReference Include="Castle.Windsor" Version="5.1.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FrontendFramework\FrontendFramework.csproj" />
+    <ProjectReference Include="..\Ui.Utilities\Ui.Utilities.csproj" />
     <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 

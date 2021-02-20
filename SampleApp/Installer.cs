@@ -10,7 +10,9 @@ namespace SampleApp
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             
-            container.Install(new TicTacToe.Installer(),
+            container.Install(
+                new SudokuSolver.Installer(),
+                new TicTacToe.Installer(),
                 new BindingSamples.Installer()
                 );
         }
