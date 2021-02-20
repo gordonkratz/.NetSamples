@@ -8,6 +8,10 @@
              d:DataContext="{d:DesignInstance local:SudokuViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
         <Viewbox Stretch="Uniform"
                  Grid.Row="0"
                  Grid.Column="0"
@@ -20,12 +24,15 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBox Text="{Binding Value}"/>
+                        <TextBox Text="{Binding Value, Mode=TwoWay}"/>
 
 
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Viewbox>
+        <StackPanel Grid.Row="1">
+            <Button Content="Solve" Command="{Binding SolveCommand}"/>
+        </StackPanel>
     </Grid>
 </UserControl>
