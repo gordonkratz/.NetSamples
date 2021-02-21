@@ -21,9 +21,9 @@ namespace FrontendFramework
             wpfDispatcher = Dispatcher.CurrentDispatcher;
         }
 
-        public void Post(Action action)
+        public void Post(Action action, bool forcePost = false)
         {
-            if (wpfDispatcher.CheckAccess())
+            if (!forcePost && wpfDispatcher.CheckAccess())
             {
                 action();
             }

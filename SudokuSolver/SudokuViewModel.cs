@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrontendFramework;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,44 +12,79 @@ namespace SudokuSolver
     public class SudokuViewModel : ViewModelBase
     {
         private readonly SudokuViewModelItem[] _backingArray;
+        private readonly IWpfThread _thread;
+        private bool _isSolving;
 
-        public SudokuViewModel()
+        public SudokuViewModel(IWpfThread thread)
         {
-            SolveCommand = new RelayCommand(SolvePuzzle);
+            SolveCommand = new RelayCommand(StartSolving);
             _backingArray = new SudokuViewModelItem[81];
             for(int i = 0; i < _backingArray.Length; i++)
             {
                 Cells.Add(_backingArray[i] = new SudokuViewModelItem());
             }
+
+            _thread = thread;
         }
 
         public ICommand SolveCommand { get; } 
+        public bool IsSolving 
+        { 
+            get => _isSolving;
+            set => SetProperty(ref _isSolving, value);
+        }
 
-        public  void SolvePuzzle()
+        bool[] given;
+        int firstBlank, index;
+
+        public void StartSolving()
         {
-            var given = _backingArray.Select(item => item.Value != 0).ToArray();
+            IsSolving = true;
+            given = _backingArray.Select(item => item.Value != 0).ToArray();
+            firstBlank = Array.IndexOf(given, false) - 1;
+            index = 0;
+            SolveIteration();
+        }
 
-            var index = 0;
-            while (index < _backingArray.Length) 
+
+        private void SolveIteration()
+        {
+            if (index >= _backingArray.Length)
             {
-                if (given[index])
+                IsSolving = false;
+                return;
+            }
+            if (given[index])
                     index++;
-                else
-                {
+            else
+            {
+                _backingArray[index].Value++;
+                while (!CheckValidation(index))
                     _backingArray[index].Value++;
-                    while (!CheckValidation(index))
-                        _backingArray[index].Value++;
 
-                    if (_backingArray[index].Value > 9)
-                    {
-                        _backingArray[index].Value = 0;
+                if (_backingArray[index].Value > 9)
+                {
+                    _backingArray[index].Value = 0;
+                    index--;
+                    while (given[index] && index > firstBlank)
                         index--;
-                        while (given[index])
-                            index--;
+                    if (index == firstBlank)
+                    { 
+                        for(int i = 0; i < given.Length; i++)
+                        {
+                            if (!given[i])
+                                _backingArray[i].Value = 0;
+                        }
+                        IsSolving = false;
+                        return;
+                    }
                     }
                     else
-                        index++;
+                    {
+                    index++;
                 }
+                _thread.Post(SolveIteration, true);
+
             }
         }
 

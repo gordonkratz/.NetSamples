@@ -7,7 +7,7 @@ namespace Utilities.Threading
 {
     public interface IPostWorkToAnotherThread
     {
-        void Post(Action action);
+        void Post(Action action, bool forcePost = false);
     }
 
     public static class ThreadPostExtensions
