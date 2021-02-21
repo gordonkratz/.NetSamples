@@ -18,6 +18,7 @@ namespace SudokuSolver
         public SudokuViewModel(IWpfThread thread)
         {
             SolveCommand = new RelayCommand(StartSolving);
+            ResetCommand = new RelayCommand(Reset);
             _backingArray = new SudokuViewModelItem[81];
             for(int i = 0; i < _backingArray.Length; i++)
             {
@@ -27,7 +28,16 @@ namespace SudokuSolver
             _thread = thread;
         }
 
+        private void Reset()
+        {
+            for(int i =0; i < _backingArray.Length; i++)
+            {
+                _backingArray[i].Value = 0;
+            }
+        }
+
         public ICommand SolveCommand { get; } 
+        public ICommand ResetCommand { get; }
         public bool IsSolving 
         { 
             get => _isSolving;
@@ -80,12 +90,10 @@ namespace SudokuSolver
                     }
                     }
                     else
-                    {
-                    index++;
-                }
-                _thread.Post(SolveIteration, true);
-
+                        index++;
+                
             }
+            _thread.Post(SolveIteration, true);
         }
 
         private bool CheckValidation(int index)
