@@ -9,7 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
-            <utilities:BoolInversionConverter x:Key="InversionConverter"/>
+            <utilities:NullToBoolConverter x:Key="NullConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -33,7 +33,7 @@
                             Content="{Binding Value, Mode=TwoWay}"
                             Command="{Binding Click}"
                             Width="17"
-                            IsEnabled="{Binding Path=DataContext.IsSolving, ElementName=Board, Converter={StaticResource InversionConverter}}">
+                            IsEnabled="{Binding Path=DataContext.CurrentObserver, ElementName=Board, Converter={StaticResource NullConverter}}">
                             <Button.Style>
                                 <Style TargetType="Button">
                                     <Style.Triggers>

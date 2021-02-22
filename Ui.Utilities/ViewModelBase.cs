@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Ui.Utilities
@@ -11,7 +12,7 @@ namespace Ui.Utilities
         {
             var old = property;
             property = newValue;
-            if (!old.Equals(property))
+            if (!EqualityComparer<T>.Default.Equals(old, property))
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
                 return true;

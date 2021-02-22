@@ -19,7 +19,7 @@ namespace SudokuSolver
         private readonly SudokuViewModelItem[] _backingArray;
         private readonly IWpfThread _thread;
         private readonly ISudokuSolver _solver;
-        private bool _isSolving;
+        private IDisposable _currentObserver;
 
         public SudokuViewModel(IWpfThread thread, ISudokuSolver solver)
         {
@@ -47,42 +47,43 @@ namespace SudokuSolver
 
         private void Reset()
         {
+            DisposeObserver();
             foreach(var item in _backingArray)
             {
                 item.Value = 0;
             }
-            IsSolving = false;
+        }
+
+        private void DisposeObserver()
+        {
+            CurrentObserver?.Dispose();
+            CurrentObserver = null;
         }
 
         public ICommand SolveAnimatedCommand { get; } 
         public ICommand SolveCommand { get; }
         public ICommand ResetCommand { get; }
 
-        public bool IsSolving 
-        { 
-            get => _isSolving;
-            set => SetProperty(ref _isSolving, value);
+        public IDisposable CurrentObserver
+        {
+            get => _currentObserver;
+            set => SetProperty(ref _currentObserver, value);
         }
 
         public void StartSolvingAnimated()
         {
-            IsSolving = true;
             var observable = _solver.GenerateSolvingSteps(_backingArray.Select(item => item.Value).ToArray())
                 .ToObservable(Scheduler.Default);
-            observable.Pace(TimeSpan.FromMilliseconds(1))
+            CurrentObserver = observable.Pace(TimeSpan.FromMilliseconds(1))
                 .Subscribe(_thread.Wrap<SolveStep>(ApplyIteration), 
-                    _thread.Wrap<Exception>(e => Completed()),
-                    _thread.Wrap(Completed));
-        }
-
-        private void Completed()
-        {
-            IsSolving = false;
+                    _thread.Wrap<Exception>(e => DisposeObserver()),
+                    _thread.Wrap(DisposeObserver));
         }
 
         private void ApplyIteration(SolveStep step)
         {
-            _backingArray[step.Index].Value = step.Value;
+            if(CurrentObserver != null)
+                _backingArray[step.Index].Value = step.Value;
         }
 
         public ObservableCollection<SudokuViewModelItem> Cells { get; } = new ObservableCollection<SudokuViewModelItem>();
