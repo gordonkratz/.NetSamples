@@ -74,16 +74,18 @@ namespace SudokuSolver
         {
             var observable = _solver.GenerateSolvingSteps(_backingArray.Select(item => item.Value).ToArray())
                 .ToObservable(Scheduler.Default);
-            CurrentObserver = observable.Pace(TimeSpan.FromMilliseconds(1))
-                .Subscribe(_thread.Wrap<SolveStep>(ApplyIteration), 
+            CurrentObserver = observable.Buffer(5)
+                .Pace(TimeSpan.FromMilliseconds(1))                
+                .Subscribe(_thread.Wrap<IList<SolveStep>>(ApplyIteration), 
                     _thread.Wrap<Exception>(e => DisposeObserver()),
                     _thread.Wrap(DisposeObserver));
         }
 
-        private void ApplyIteration(SolveStep step)
+        private void ApplyIteration(IList<SolveStep> steps)
         {
             if(CurrentObserver != null)
-                _backingArray[step.Index].Value = step.Value;
+                foreach(var step in steps)
+                    _backingArray[step.Index].Value = step.Value;
         }
 
         public ObservableCollection<SudokuViewModelItem> Cells { get; } = new ObservableCollection<SudokuViewModelItem>();
