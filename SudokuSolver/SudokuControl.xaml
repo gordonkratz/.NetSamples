@@ -29,9 +29,21 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBox 
-                            Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            IsEnabled="{Binding IsSolving, Converter={StaticResource InversionConverter}}"/>
+                        <Button 
+                            Content="{Binding Value, Mode=TwoWay}"
+                            Command="{Binding Click}"
+                            Width="17"
+                            IsEnabled="{Binding Path=DataContext.IsSolving, ElementName=Board, Converter={StaticResource InversionConverter}}">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Given}" Value="True">
+                                            <Setter Property="Foreground" Value="Red"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
 
 
                     </DataTemplate>
@@ -39,7 +51,7 @@
             </ItemsControl>
         </Viewbox>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Button Content="Rest" Command="{Binding ResetCommand}"
+            <Button Content="Reset" Command="{Binding ResetCommand}"
                     Padding="7"
                     Margin="3"
                     Width="Auto"/>
@@ -47,6 +59,11 @@
                     Padding="7"
                     Margin="3"
                     Width="Auto"/>
+            <Button Content="Solve Animated" Command="{Binding SolveAnimatedCommand}"
+                    Padding="7"
+                    Margin="3"
+                    Width="Auto"/>
+
         </StackPanel>
     </Grid>
 </UserControl>

@@ -25,5 +25,10 @@ namespace SudokuSolver
             InitializeComponent();
             DataContext = vm;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

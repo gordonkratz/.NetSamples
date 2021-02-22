@@ -4,8 +4,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Reactive.Linq;
 using Ui.Utilities;
+using System.Reactive.Concurrency;
+using Utilities.Threading;
 
 namespace SudokuSolver
 {
@@ -13,11 +18,13 @@ namespace SudokuSolver
     {
         private readonly SudokuViewModelItem[] _backingArray;
         private readonly IWpfThread _thread;
+        private readonly ISudokuSolver _solver;
         private bool _isSolving;
 
-        public SudokuViewModel(IWpfThread thread)
+        public SudokuViewModel(IWpfThread thread, ISudokuSolver solver)
         {
-            SolveCommand = new RelayCommand(StartSolving);
+            SolveAnimatedCommand = new RelayCommand(StartSolvingAnimated);
+            SolveCommand = new RelayCommand(Solve);
             ResetCommand = new RelayCommand(Reset);
             _backingArray = new SudokuViewModelItem[81];
             for(int i = 0; i < _backingArray.Length; i++)
@@ -26,116 +33,56 @@ namespace SudokuSolver
             }
 
             _thread = thread;
+            _solver = solver;
+        }
+
+        private void Solve()
+        {
+            var solution = _solver.Solve(_backingArray.Select(item => item.Value).ToArray());
+            for(int i = 0; i < solution.Length; i++)
+            {
+                _backingArray[i].Value = solution[i];
+            }
         }
 
         private void Reset()
         {
-            for(int i =0; i < _backingArray.Length; i++)
+            foreach(var item in _backingArray)
             {
-                _backingArray[i].Value = 0;
+                item.Value = 0;
             }
+            IsSolving = false;
         }
 
-        public ICommand SolveCommand { get; } 
+        public ICommand SolveAnimatedCommand { get; } 
+        public ICommand SolveCommand { get; }
         public ICommand ResetCommand { get; }
+
         public bool IsSolving 
         { 
             get => _isSolving;
             set => SetProperty(ref _isSolving, value);
         }
 
-        bool[] given;
-        int firstBlank, index;
-
-        public void StartSolving()
+        public void StartSolvingAnimated()
         {
             IsSolving = true;
-            given = _backingArray.Select(item => item.Value != 0).ToArray();
-            firstBlank = Array.IndexOf(given, false) - 1;
-            index = 0;
-            SolveIteration();
+            var observable = _solver.GenerateSolvingSteps(_backingArray.Select(item => item.Value).ToArray())
+                .ToObservable(Scheduler.Default);
+            observable.Pace(TimeSpan.FromMilliseconds(1))
+                .Subscribe(_thread.Wrap<SolveStep>(ApplyIteration), 
+                    _thread.Wrap<Exception>(e => Completed()),
+                    _thread.Wrap(Completed));
         }
 
-
-        private void SolveIteration()
+        private void Completed()
         {
-            if (index >= _backingArray.Length)
-            {
-                IsSolving = false;
-                return;
-            }
-            if (given[index])
-                    index++;
-            else
-            {
-                _backingArray[index].Value++;
-                while (!CheckValidation(index))
-                    _backingArray[index].Value++;
-
-                if (_backingArray[index].Value > 9)
-                {
-                    _backingArray[index].Value = 0;
-                    index--;
-                    while (given[index] && index > firstBlank)
-                        index--;
-                    if (index == firstBlank)
-                    { 
-                        for(int i = 0; i < given.Length; i++)
-                        {
-                            if (!given[i])
-                                _backingArray[i].Value = 0;
-                        }
-                        IsSolving = false;
-                        return;
-                    }
-                    }
-                    else
-                        index++;
-                
-            }
-            _thread.Post(SolveIteration, true);
+            IsSolving = false;
         }
 
-        private bool CheckValidation(int index)
+        private void ApplyIteration(SolveStep step)
         {
-            var currentNumber = _backingArray[index].Value;
-
-            //check row
-            var start = index / 9 * 9;
-            for (int r = 0; r < 9; r++) {
-                var i = start + r;
-                if (i == index)
-                    continue;
-                if (_backingArray[i].Value == currentNumber)
-                    return false;
-            }
-
-            // check column
-            start = index % 9;
-            for (int r = 0; r < 9; r++)
-            {
-                var i = 9 * r + start;
-                if (i == index)
-                    continue;
-                if (_backingArray[i].Value == currentNumber)
-                    return false; 
-            }
-
-            // check box
-            var leftMost = index / 3 * 3;
-            var topCorner = (leftMost % 9) + (leftMost / 27 * 27);
-            for(int a = 0; a < 3; a++)
-            {
-                for (int b = 0; b < 3; b++)
-                {
-                    var i = 9 * a + b + topCorner;
-                    if (i == index)
-                        continue;
-                    if (_backingArray[i].Value == currentNumber)
-                        return false;
-                }
-            }
-            return true;
+            _backingArray[step.Index].Value = step.Value;
         }
 
         public ObservableCollection<SudokuViewModelItem> Cells { get; } = new ObservableCollection<SudokuViewModelItem>();
@@ -145,6 +92,18 @@ namespace SudokuSolver
     public class SudokuViewModelItem : ViewModelBase
     {
         private int _value;
+
+        public SudokuViewModelItem()
+        {
+            Click = new RelayCommand(Increment);
+        }
+
+        private void Increment()
+        {
+            Value = Value % 10 + 1;
+        }
+
+        public ICommand Click { get; }
 
         public int Value
         {

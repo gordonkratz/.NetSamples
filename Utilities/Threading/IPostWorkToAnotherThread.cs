@@ -12,6 +12,12 @@ namespace Utilities.Threading
 
     public static class ThreadPostExtensions
     {
+
+        public static Action Wrap(this IPostWorkToAnotherThread thread, Action action)
+        {
+            return () => thread.Post(action);
+        }
+
         public static Action<T> Wrap<T>(this IPostWorkToAnotherThread thread, Action<T> action)
         {
             return item => thread.Post(() => action(item));

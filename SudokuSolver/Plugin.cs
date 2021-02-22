@@ -18,7 +18,8 @@ namespace SudokuSolver
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.RegisterPlugin<Plugin, SudokuControl>();
-            container.Register(Component.For<SudokuViewModel>());
+            container.Register(Component.For<SudokuViewModel>(),
+                Component.For<ISudokuSolver>().ImplementedBy<SudokuSolver>());
         }
     }
 }
