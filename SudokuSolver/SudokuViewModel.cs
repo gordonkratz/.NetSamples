@@ -3,9 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Reactive.Linq;
 using Ui.Utilities;
@@ -103,7 +100,7 @@ namespace SudokuSolver
 
         private void Increment()
         {
-            Value = Value % 10 + 1;
+            Value = (Value + 1) % 10;
         }
 
         public ICommand Click { get; }

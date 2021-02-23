@@ -10,6 +10,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <utilities:NullToBoolConverter x:Key="NullConverter"/>
+            <local:ZeroToEmptyConverter x:Key="ZeroConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -30,7 +31,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Button 
-                            Content="{Binding Value, Mode=TwoWay}"
+                            Content="{Binding Value, Mode=TwoWay, Converter={StaticResource ZeroConverter}}"
                             Command="{Binding Click}"
                             Width="17"
                             IsEnabled="{Binding Path=DataContext.CurrentObserver, ElementName=Board, Converter={StaticResource NullConverter}}">
