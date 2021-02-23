@@ -23,6 +23,7 @@ namespace SudokuSolver
             SolveAnimatedCommand = new RelayCommand(StartSolvingAnimated);
             SolveCommand = new RelayCommand(Solve);
             ResetCommand = new RelayCommand(Reset);
+
             _backingArray = new SudokuViewModelItem[81];
             for(int i = 0; i < _backingArray.Length; i++)
             {
@@ -35,7 +36,7 @@ namespace SudokuSolver
 
         private void Solve()
         {
-            var solution = _solver.Solve(_backingArray.Select(item => item.Value).ToArray());
+            var solution = _solver.Solve(_backingArray.Select(item => item.Fixed ? item.Value : 0).ToArray());
             for(int i = 0; i < solution.Length; i++)
             {
                 _backingArray[i].Value = solution[i];
@@ -48,6 +49,7 @@ namespace SudokuSolver
             foreach(var item in _backingArray)
             {
                 item.Value = 0;
+                item.Fixed = false;
             }
         }
 
@@ -69,7 +71,7 @@ namespace SudokuSolver
 
         public void StartSolvingAnimated()
         {
-            var observable = _solver.GenerateSolvingSteps(_backingArray.Select(item => item.Value).ToArray())
+            var observable = _solver.GenerateSolvingSteps(_backingArray.Select(item => item.Fixed ? item.Value : 0).ToArray())
                 .ToObservable(Scheduler.Default);
             CurrentObserver = observable.Buffer(5)
                 .Pace(TimeSpan.FromMilliseconds(1))                
@@ -92,23 +94,23 @@ namespace SudokuSolver
     public class SudokuViewModelItem : ViewModelBase
     {
         private int _value;
+        private bool _fixed;
 
         public SudokuViewModelItem()
         {
-            Click = new RelayCommand(Increment);
         }
 
-        private void Increment()
-        {
-            Value = (Value + 1) % 10;
-        }
-
-        public ICommand Click { get; }
 
         public int Value
         {
             get => _value;
             set => SetProperty(ref _value, value);
+        }
+
+        public bool Fixed
+        {
+            get => _fixed;
+            set => SetProperty(ref _fixed, value);
         }
     }
 }

@@ -32,13 +32,14 @@
                     <DataTemplate>
                         <Button 
                             Content="{Binding Value, Mode=TwoWay, Converter={StaticResource ZeroConverter}}"
-                            Command="{Binding Click}"
+                            Click="Button_Click"
+                            MouseRightButtonDown="Button_MouseRightButtonDown"
                             Width="17"
                             IsEnabled="{Binding Path=DataContext.CurrentObserver, ElementName=Board, Converter={StaticResource NullConverter}}">
                             <Button.Style>
                                 <Style TargetType="Button">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Given}" Value="True">
+                                        <DataTrigger Binding="{Binding Fixed}" Value="True">
                                             <Setter Property="Foreground" Value="Red"/>
                                         </DataTrigger>
                                     </Style.Triggers>

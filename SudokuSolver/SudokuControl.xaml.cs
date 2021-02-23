@@ -29,7 +29,29 @@ namespace SudokuSolver
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            var vm = ((sender as Button)?.DataContext as SudokuViewModelItem);
+            if (vm == null)
+                return;
 
+            if (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift))
+            {
+                vm.Value = 0;
+            }
+            else
+            {
+                vm.Value = (vm.Value + 1) % 10;
+            }
+            vm.Fixed = vm.Value != 0;
+
+        }
+
+        private void Button_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var vm = ((sender as Button)?.DataContext as SudokuViewModelItem);
+            if (vm == null)
+                return;
+            vm.Value = vm.Value == 0 ? 9 : (vm.Value - 1);
+            vm.Fixed = vm.Value != 0;
         }
     }
 
