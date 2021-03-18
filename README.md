@@ -7,3 +7,5 @@ Example one is a Sudoku Solver. Click on the squares to increment/decrement the 
 Example two is a two player tic tac toe game. Switch off picking squares. Change the size of the board to raise the difficulty. 
 
 Example three demonstrates MVVM priciples. Different methods of binding view data all have similar results for the user. 
+
+The app can be downloaded and run locally from the releases section of this repository. 
